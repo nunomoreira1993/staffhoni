@@ -1,0 +1,34 @@
+//main: style.scss
+//_variables.scss
+
+$font: "Montserrat", sans-serif;
+$font-secondary: "Permanent Marker", cursive;
+
+$image-path:"/temas/guerin/imagens/";
+$padding-wrapper:0 22.5px;
+$wrapper-width:1280px;
+
+/* main colors */
+
+$primary-color:#000000;
+$secondary-color:#D52F30;
+
+/* other colors */
+
+$white: #FFFFFF;
+$gray: #9C9C9C;
+$light-gray: #F5F5F5;
+$black: #000000;
+$red: #FF0000;
+
+/* frontend colors */
+
+$site-background: #FFFFFF !default;
+$content-background: #F1F1F1 !default;
+$content-text: #00223A !default;
+$menu-background: #002A4E !default;
+$menu-text: #FFFFFF !default;
+$button-background: #D52F30 !default;
+$button-text: #FFFFFF !default;
+$newsletter-background: #334E61 !default;
+$newsletter-text: #FFFFFF !default;

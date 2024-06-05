@@ -1,0 +1,141 @@
+//_mixins.scss
+
+@mixin transition($speed, $easing:ease-in-out, $elements:all) {
+	-webkit-transition:color $speed $easing, background $speed $easing, opacity $speed $easing;
+	-moz-transition:$elements $speed $easing;
+	-ms-transition:$elements $speed $easing;
+	-o-transition:$elements $speed $easing;
+	transition:$elements $speed $easing;
+}
+
+@mixin absolute_vertical_horizontal_center(){
+    transform: translate(50%,50%);
+    bottom: 50%;
+    right: 50%;
+}
+@mixin absolute_vertical_center(){
+    transform: translateY(50%);
+    bottom: 50%;
+}
+@mixin absolute_horizontal_center(){
+    transform: translateX(50%);
+    left: 50%;
+}
+@mixin layer_opaca_ecra($top){
+    content:"";
+    background-color:rgba(0, 0, 0, 0.56);
+    position: absolute;
+    z-index: 1;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    display: block;
+    top: 121px;
+}
+
+
+@mixin placeholder-color($color) {
+	&::-webkit-input-placeholder {
+		color:$color;
+	}
+	&:-moz-placeholder {
+		color:$color;
+	}
+	&::-moz-placeholder {
+		color:$color;
+	}
+	&:-ms-input-placeholder {
+		color:$color;
+	}
+}
+
+@mixin placeholder-opacity($val) {
+	&::-webkit-input-placeholder {
+		opacity:$val !important;
+	}
+	&:-moz-placeholder {
+		opacity:$val !important;
+	}
+	&::-moz-placeholder {
+		opacity:$val !important;
+	}
+	&:-ms-input-placeholder {
+		opacity:$val !important;
+	}
+}
+
+@mixin placeholder-text-transform($transform) {
+	&::-webkit-input-placeholder {
+		text-transform:$transform;
+	}
+	&:-moz-placeholder {
+		text-transform:$transform;
+	}
+	&::-moz-placeholder {
+		text-transform:$transform;
+	}
+	&:-ms-input-placeholder {
+		text-transform:$transform;
+	}
+}
+
+@mixin placeholder-letter-spacing($value) {
+	&::-webkit-input-placeholder {
+		letter-spacing:$value;
+	}
+	&:-moz-placeholder {
+		letter-spacing:$value;
+	}
+	&::-moz-placeholder {
+		letter-spacing:$value;
+	}
+	&:-ms-input-placeholder {
+		letter-spacing:$value;
+	}
+}
+
+@mixin placeholder-font-size($value) {
+	&::-webkit-input-placeholder {
+		font-size:$value;
+	}
+	&:-moz-placeholder {
+		font-size:$value;
+	}
+	&::-moz-placeholder {
+		font-size:$value;
+	}
+	&:-ms-input-placeholder {
+		font-size:$value;
+	}
+}
+
+@mixin placeholder-font-weight($value) {
+	&::-webkit-input-placeholder {
+		font-weight:$value;
+	}
+	&:-moz-placeholder {
+		font-weight:$value;
+	}
+	&::-moz-placeholder {
+		font-weight:$value;
+	}
+	&:-ms-input-placeholder {
+		font-weight:$value;
+	}
+}
+
+@mixin placeholder-font-style($value) {
+	&::-webkit-input-placeholder {
+		font-style:$value;
+	}
+	&:-moz-placeholder {
+		font-style:$value;
+	}
+	&::-moz-placeholder {
+		font-style:$value;
+	}
+	&:-ms-input-placeholder {
+		font-style:$value;
+	}
+}

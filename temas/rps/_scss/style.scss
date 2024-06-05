@@ -1,0 +1,2053 @@
+@charset "UTF-8";
+@import "fonts";
+@import "variables";
+@import "globals";
+@import "mixins";
+.no-js body {
+    display: none;
+}
+
+body {
+    color: #000;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.open {
+    .menu {
+        transform-origin: 0% 0%;
+        transform: translate(100%, 0);
+    }
+}
+
+.menu {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    z-index: 20;
+    background: #fff;
+    -webkit-box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08);
+    z-index: 1;
+    background-color: #edeff2;
+    left: -100%;
+    transform-origin: 0% 0%;
+    transform: translate(0, 0);
+    transition: transform 0.5s cubic-bezier(.77, .2, .05, 1);
+    .scroll {
+        height: 100%;
+        position: relative;
+        -ms-touch-action: auto;
+        touch-action: auto;
+        overflow: auto;
+        -ms-overflow-style: none;
+        padding-top: 80px;
+        padding-bottom: 40px;
+    }
+    .header {
+        padding: 0 5%;
+        padding-top: 30px;
+        height: 80px;
+        background: #FFFFFF;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        .back {
+            height: 30px;
+            display: block;
+            img {
+                height: 100%;
+            }
+        }
+        h2 {
+            text-align: center;
+            font-size: 25px;
+        }
+        .logout {
+            height: 30px;
+            display: block;
+            img {
+                height: 100%;
+            }
+        }
+    }
+    .tab {
+        padding: 0 5%;
+        padding-top: 36px;
+        h3 {
+            font-size: 14px;
+            color: #a8a9ad;
+            margin-bottom: 20px;
+        }
+        .items {
+            border-radius: 10px;
+            overflow: hidden;
+            a {
+                padding: 0 20px;
+                height: 60px;
+                width: 100%;
+                background: #FFFFFF;
+                display: flex;
+                margin-top: 3px;
+                align-items: center;
+                justify-content: flex-start;
+                &:first-child {
+                    margin-top: 0;
+                }
+                .icon {
+                    width: 30px;
+                    border-radius: 25%;
+                    height: 30px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: #ee7908;
+                    img {
+                        height: 18px;
+                    }
+                }
+                .nome {
+                    padding-left: 20px;
+                    font-size: 14px;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+}
+
+.content {
+    width: 100%;
+    background: #f2f2f2;
+    .hambburger {
+        margin-top: 4px;
+        width: 30px;
+        height: 21px;
+        display: block;
+        position: relative;
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+        -webkit-transition: .5s ease-in-out;
+        -moz-transition: .5s ease-in-out;
+        -o-transition: .5s ease-in-out;
+        transition: .5s ease-in-out;
+        cursor: pointer;
+        position: absolute;
+        left: 5%;
+        top: 30px;
+        span {
+            display: block;
+            position: absolute;
+            height: 4px;
+            width: 100%;
+            border-radius: 9px;
+            opacity: 1;
+            left: 0;
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+            -webkit-transition: .25s ease-in-out;
+            -moz-transition: .25s ease-in-out;
+            -o-transition: .25s ease-in-out;
+            transition: .25s ease-in-out;
+            background: #ee7908;
+        }
+        span:nth-child(1) {
+            top: 0;
+        }
+        span:nth-child(2) {
+            top: 8px;
+        }
+        span:nth-child(3) {
+            top: 8px;
+        }
+        span:nth-child(4) {
+            top: 16px;
+        }
+    }
+    .logout {
+        position: absolute;
+        right: 5%;
+        height: 30px;
+        top: 30px;
+        display: block;
+        img {
+            height: 100%;
+        }
+    }
+    .perfil {
+        background: #ffffff;
+        width: 100%;
+        padding: 50px 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        border-bottom: #f2f2f2;
+        .foto {
+            width: 150px;
+            height: 150px;
+            overflow: hidden;
+            border-radius: 100%;
+            display: block;
+            img {
+                width: 100%;
+            }
+        }
+        .nome {
+            margin-top: 20px;
+            font-weight: 600;
+            font-size: 20px;
+            color: #333333;
+            width: 100%;
+            display: block;
+            text-align: center;
+        }
+        .cargo {
+            margin-top: 8px;
+            font-weight: 500;
+            font-size: 16px;
+            color: #b2b2b2;
+            width: 100%;
+            display: block;
+            text-align: center;
+        }
+    }
+    .entradas {
+        padding: 20px 5%;
+        .sem_registos {
+            margin-top: 40px;
+            text-align: center;
+        }
+        .evento {
+            margin: 20px 0;
+            box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.2);
+            background: #FFFFFF;
+            padding: 15px;
+            border-radius: 5px;
+            .topo {
+                display: flex;
+                border-bottom: 1px solid #f2f2f2;
+                justify-content: space-between;
+                padding-bottom: 10px;
+                margin-bottom: 10px;
+                .estado {
+                    color: #ee7908;
+                    font-size: 13px;
+                }
+                .data {
+                    font-weight: 600;
+                    font-size: 16px;
+                }
+            }
+            .rodape {
+                .item {
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 5px 0;
+                    .titulo {
+                        font-size: 13px;
+                    }
+                    .valor {
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+    }
+    .header {
+        padding-top: 10px;
+        height: 80px;
+        background: #FFFFFF;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        h2 {
+            text-align: center;
+            font-size: 18px;
+            max-width: 200px;
+        }
+    }
+    .conteudo {
+        padding: 30px 5%;
+        display: flex;
+        flex-wrap: wrap;
+        .adicionar {
+            margin-left: auto;
+            background: #ee7908;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            padding-left: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 150px;
+            .icon {
+                width: 20px;
+                display: block;
+                img {
+                    width: 100%;
+                }
+            }
+            .label {
+                font-size: 13px;
+            }
+        }
+        .voltar {
+            margin-right: auto;
+            background: #ffffff;
+            border: 1px solid #ee7908;
+            color: #ee7908;
+            padding: 10px 20px;
+            padding-left: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100px;
+            margin-bottom: 30px;
+            .icon {
+                width: 20px;
+                display: block;
+                img {
+                    width: 100%;
+                }
+            }
+            .label {
+                font-size: 14px;
+            }
+        }
+        form {
+            box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.2);
+            background: #FFFFFF;
+            padding: 25px 25px;
+            width: 100%;
+            margin-bottom: 25px;
+            .bloco {
+                position: relative;
+                border-bottom: 1px solid #ccc;
+                padding-bottom: 30px;
+                margin-top: 30px;
+                .remover {
+                    width: 30px;
+                    img {
+                        width: 100%;
+                    }
+                    position: absolute;
+                    right:0;
+                    top:-15px;
+                }
+            }
+            .inputs {
+                margin-top: 30px;
+                &:first-child {
+                    margin-top: 0;
+                }
+                .label {
+                    color: #000000;
+                    font-size: 13px;
+                    font-weight: 400;
+                    line-height: 13px;
+                    margin-bottom: 10px;
+                    width: 100%;
+                    font-weight: 400;
+                }
+                .staff,
+                .garrafas {
+                    flex-wrap: wrap;
+                    .escolha-garrafas-responsive {
+                        .garrafa-div {
+                            input {
+                                padding: 0;
+                            }
+                        }
+                    }
+                    .staff-escolhido {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        .foto {
+                            border-radius: 100%;
+                            max-width: 80px;
+                            overflow: hidden;
+                            display: block;
+                            margin-right: 20px;
+                            img {
+                                max-width: 100%;
+                            }
+                        }
+                        .nome {
+                            margin-bottom: 0;
+                            display: block;
+                            font-weight: 800;
+                            font-size: 18px;
+                            text-align: center;
+                        }
+                    }
+                    .adicionar {
+                        margin-right: auto;
+                        display: inline-block;
+                        font-weight: 400;
+                        color: #212529;
+                        text-align: center;
+                        vertical-align: middle;
+                        user-select: none;
+                        background-color: transparent;
+                        border: 1px solid transparent;
+                        padding: 0.375rem 0.75rem;
+                        font-size: 0.875rem;
+                        line-height: 1.5;
+                        border-radius: 0.25rem;
+                        color: #fff;
+                        background-color: #00c292;
+                        margin-top: 20px;
+                        border-color: #00c292;
+                        width: auto;
+                    }
+                }
+                .input {
+                    .foto {
+                        margin-bottom: 20px;
+                    }
+                    input {
+                        width: 100%;
+                        height: 50px;
+                        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                        border-radius: 4px;
+                        border: 1px solid #dfdede;
+                        background-color: #ffffff;
+                        color: #000000;
+                        font-size: 14px;
+                        font-weight: 700;
+                        line-height: 14px;
+                        padding: 13px 20px;
+                    }
+                    textarea {
+                        width: 100%;
+                        height: 150px;
+                        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                        border-radius: 4px;
+                        border: 1px solid #dfdede;
+                        background-color: #ffffff;
+                        color: #000000;
+                        font-size: 14px;
+                        font-weight: 700;
+                        line-height: 14px;
+                        padding: 13px 20px;
+                    }
+                    select {
+                        width: 100%;
+                        height: 50px;
+                        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                        border-radius: 4px;
+                        border: 1px solid #dfdede;
+                        background-color: #ffffff;
+                        color: #000000;
+                        font-size: 14px;
+                        font-weight: 700;
+                        line-height: 14px;
+                        padding: 0 20px;
+                    }
+                }
+                input[type="submit"] {
+                    width: 100%;
+                    height: 49px;
+                    max-width: 100%;
+                    background-color: #000000;
+                    color: #ffffff;
+                    font-size: 14px;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    text-align: center;
+                    justify-content: center;
+                }
+                input[type="button"] {
+                    width: 100%;
+                    height: 49px;
+                    max-width: 100%;
+                    background-color: #cccccc;
+                    color: #000000;
+                    border: 0;
+                    cursor: pointer;
+                    font-size: 14px;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    text-align: center;
+                }
+            }
+        }
+        .tabela {
+            width: 100%;
+            margin-top: 40px;
+            box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.2);
+            background: #FFFFFF;
+            padding: 25px 25px;
+            &.lista {
+                .item {
+                    .coluna {
+                        width: 100%;
+                    }
+                }
+            }
+            &.pagamento {
+                &.active {
+                    .item {
+                        .topo {
+                            .toggle {
+                                &.menos {
+                                    display: block;
+                                }
+                                &.mais {
+                                    display: none;
+                                }
+                            }
+                        }
+                        .rodape {
+                            display: flex;
+                        }
+                    }
+                }
+                .item {
+                    .topo {
+                        .toggle {
+                            color: #ee7908;
+                            font-size: 14px;
+                            margin-top: 20px;
+                            display: block;
+                            &.menos {
+                                display: none;
+                            }
+                        }
+                    }
+                    .rodape {
+                        display: none;
+                        flex-wrap: wrap;
+                        border-top: 0;
+                        margin-top: 0;
+                        .extra {
+                            display: block;
+                            width: 100%;
+                            border-top: 1px solid #f2f2f2;
+                            padding-top: 20px;
+                            margin-top: 20px;
+                            .topo_extra {
+                                display: flex;
+                                .nome {
+                                    display: block;
+                                    width: 100%;
+                                }
+                                .valor {
+                                    font-weight: 600;
+                                    &.recebido {
+                                        color: #179c17;
+                                    }
+                                    &.pago {
+                                        color: #ea3939;
+                                    }
+                                }
+                            }
+                            .descricao {
+                                display: block;
+                                width: 100%;
+                                color: #a4aab1;
+                                margin: 10px 0;
+                            }
+                            .valor {
+                                display: block;
+                                width: 100%;
+                            }
+                        }
+                    }
+                }
+            }
+            .item {
+                width: 100%;
+                .topo {
+                    text-align: left;
+                    display: flex;
+                    width: 100%;
+                    justify-content: space-between;
+                    flex-wrap: wrap;
+                    .coluna {
+                        &:first-child {
+                            padding-right: 10px;
+                        }
+                        display: flex;
+                        flex-wrap: wrap;
+                        margin-bottom:15px;
+                        .titulo {
+                            width: 100%;
+                            font-weight: bold;
+                            font-size: 16px;
+                            margin-bottom: 5px;
+                        }
+                        .valor {
+                            width: 100%;
+                            font-size: 15px;
+                            img {
+                                width: auto;
+                                max-width: 100%;
+                                max-height: 200px;
+                            }
+                        }
+                    }
+                }
+                .pagamento {
+                    width: 100%;
+                    height: 40px;
+                    max-width: 100%;
+                    background-color: #cccccc;
+                    color: #000000;
+                    font-size: 12px;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    text-align: center;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .rodape {
+                    display: flex;
+                    justify-content: space-between;
+                    border-top: 1px solid #f2f2f2;
+                    padding-top: 20px;
+                    margin-top: 20px;
+                    a {
+                        display: block;
+                        width: 100px;
+                        text-align: center;
+                        font-weight: 600;
+                        font-size: 14px;
+                        padding: 10px 19px;
+                    }
+                    .editar {
+                        border: 1px solid #ee7908;
+                        color: #ee7908;
+                    }
+                    .apagar {
+                        background-color: #e46a76;
+                        border-color: #e46a76;
+                        color: #FFFFFF;
+                    }
+                }
+            }
+        }
+        .sem_registos {
+            font-size: 24px;
+            width: 100%;
+            display: block;
+            text-align: center;
+            margin: 100px 0;
+        }
+    }
+    .disponibilidade {
+        width: 100%;
+        z-index: 0;
+        position: relative;
+        .exportar-excell {
+            background-size: 16px;
+            background-position: 10px center;
+            background-repeat: no-repeat;
+            background-color: #FFFFFF;
+            padding: 0.375rem 0.75rem;
+            padding-left: 35px;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            border-radius: 0.25rem;
+            border: 1px solid green;
+            font-size: 12px;
+            background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNjQgNjQiPiA8cmVjdCB3aWR0aD0iMzMiIGhlaWdodD0iNDQiIHg9IjI3IiB5PSIxMSIgcng9IjQuMTI1IiByeT0iNC4xMjUiIHN0eWxlPSJvcGFjaXR5OjAuMiIvPiA8cGF0aCBkPSJtIDM0LjI1MDQxOSw1LjAwMTYyNzIgYSAzLjY0MzIyMTUsMy44MTg2MTEzIDAgMCAwIC0wLjY5OTYzNywwLjA5MTk3NiBMIDYuODM2NDk1NywxMS40NTczMiBBIDMuNjQzMjIxNSwzLjgxODYxMTMgMCAwIDAgNCwxNS4xODEwODcgbCAwLDE3LjgxODQwNSAwLDE3LjgxODQwMyBhIDMuNjQzMjIxNSwzLjgxODYxMTMgMCAwIDAgMi44MzY0OTU3LDMuNzIzNzY4IEwgMzMuNTUwNzgyLDYwLjkwNTM4IEEgMy42NDMyMjE1LDMuODE4NjExMyAwIDAgMCAzOCw1Ny4xODE2MTIgTCAzOCwzMi45OTk0OTIgMzgsOC44MTczNzEgQSAzLjY0MzIyMTUsMy44MTg2MTEzIDAgMCAwIDM0LjI1MDQxOSw1LjAwMTYyNzIgWiIgc3R5bGU9Im9wYWNpdHk6MC4yIi8+IDxyZWN0IHN0eWxlPSJmaWxsOiNlNGU0ZTQiIHdpZHRoPSIzMyIgaGVpZ2h0PSI0NCIgeD0iMjciIHk9IjEwIiByeD0iNC4xMjUiIHJ5PSI0LjEyNSIvPiA8cGF0aCBkPSJtIDMzLDE5IDAsMyA3LDAgMCw1IC03LDAgMCwzIDcsMCAwLDUgLTcsMCAwLDMgNywwIDAsNSAtNywwIDAsMyAyMSwwIDAsLTMgMCwtMjEgMCwtMyAtMywwIC04LDAgLTMsMCAtNywwIHogbSAxMCwzIDgsMCAwLDUgLTgsMCAwLC01IHogbSAwLDggOCwwIDAsNSAtOCwwIDAsLTUgeiBtIDAsOCA4LDAgMCw1IC04LDAgMCwtNSB6IiBzdHlsZT0ib3BhY2l0eTowLjIiLz4gPHBhdGggc3R5bGU9ImZpbGw6IzRmNGY0ZiIgZD0iTSAzMyAxOCBMIDMzIDIxIEwgNDAgMjEgTCA0MCAyNiBMIDMzIDI2IEwgMzMgMjkgTCA0MCAyOSBMIDQwIDM0IEwgMzMgMzQgTCAzMyAzNyBMIDQwIDM3IEwgNDAgNDIgTCAzMyA0MiBMIDMzIDQ1IEwgNTQgNDUgTCA1NCA0MiBMIDU0IDIxIEwgNTQgMTggTCA1MSAxOCBMIDQzIDE4IEwgNDAgMTggTCAzMyAxOCB6IE0gNDMgMjEgTCA1MSAyMSBMIDUxIDI2IEwgNDMgMjYgTCA0MyAyMSB6IE0gNDMgMjkgTCA1MSAyOSBMIDUxIDM0IEwgNDMgMzQgTCA0MyAyOSB6IE0gNDMgMzcgTCA1MSAzNyBMIDUxIDQyIEwgNDMgNDIgTCA0MyAzNyB6Ii8+IDxwYXRoIHN0eWxlPSJvcGFjaXR5OjAuMTtmaWxsOiNmZmZmZmYiIGQ9Ik0gMzEuMTI1IDEwIEMgMjguODM5NzUgMTAgMjcgMTEuODM5NzUgMjcgMTQuMTI1IEwgMjcgMTUuMTI1IEMgMjcgMTIuODM5NzUgMjguODM5NzUgMTEgMzEuMTI1IDExIEwgNTUuODc1IDExIEMgNTguMTYwMjUgMTEgNjAgMTIuODM5NzUgNjAgMTUuMTI1IEwgNjAgMTQuMTI1IEMgNjAgMTEuODM5NzUgNTguMTYwMjUgMTAgNTUuODc1IDEwIEwgMzEuMTI1IDEwIHoiLz4gPHBhdGggc3R5bGU9ImZpbGw6IzFkOGY1MCIgZD0ibSAzNC4yNTA0MTksNC4wMDE2Mjc2IGEgMy42NDMyMjE1LDMuODE4NjExMyAwIDAgMCAtMC42OTk2MzcsMC4wOTE5NzYgTCA2LjgzNjQ5NTcsMTAuNDU3MzIgQSAzLjY0MzIyMTUsMy44MTg2MTEzIDAgMCAwIDQsMTQuMTgxMDg3IGwgMCwxNy44MTg0MDUgMCwxNy44MTg0MDMgYSAzLjY0MzIyMTUsMy44MTg2MTEzIDAgMCAwIDIuODM2NDk1NywzLjcyMzc2OCBMIDMzLjU1MDc4Miw1OS45MDUzOCBBIDMuNjQzMjIxNSwzLjgxODYxMTMgMCAwIDAgMzgsNTYuMTgxNjEyIEwgMzgsMzEuOTk5NDkyIDM4LDcuODE3MzcxNCBBIDMuNjQzMjIxNSwzLjgxODYxMTMgMCAwIDAgMzQuMjUwNDE5LDQuMDAxNjI3NiBaIi8+IDxwYXRoIGQ9Im0gMjcuMDAwMzAxLDI1Ljk5OTc2MSAtMTQsMTQgbSAwLC0xNCAxNCwxNCAwLDAgMCwwIiBzdHlsZT0ib3BhY2l0eTowLjI7ZmlsbDpub25lO3N0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDo2O3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZCIvPiA8cGF0aCBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTojZmZmZmZmO3N0cm9rZS13aWR0aDo2O3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZCIgZD0ibSAyNy4wMDAzMDEsMjUgLTE0LDE0IG0gMCwtMTQgMTQsMTQgMCwwIDAsMCIvPiA8cGF0aCBzdHlsZT0ib3BhY2l0eTowLjE7ZmlsbDojZmZmZmZmIiBkPSJNIDM0LjI1IDQuMDAxOTUzMSBBIDMuNjQzMjIxNSAzLjgxODYxMTMgMCAwIDAgMzMuNTUwNzgxIDQuMDkzNzUgTCA2LjgzNTkzNzUgMTAuNDU3MDMxIEEgMy42NDMyMjE1IDMuODE4NjExMyAwIDAgMCA0IDE0LjE4MTY0MSBMIDQgMTUuMTgxNjQxIEEgMy42NDMyMjE1IDMuODE4NjExMyAwIDAgMSA2LjgzNTkzNzUgMTEuNDU3MDMxIEwgMzMuNTUwNzgxIDUuMDkzNzUgQSAzLjY0MzIyMTUgMy44MTg2MTEzIDAgMCAxIDM0LjI1IDUuMDAxOTUzMSBBIDMuNjQzMjIxNSAzLjgxODYxMTMgMCAwIDEgMzggOC44MTY0MDYyIEwgMzggNy44MTY0MDYyIEEgMy42NDMyMjE1IDMuODE4NjExMyAwIDAgMCAzNC4yNSA0LjAwMTk1MzEgeiIvPjwvc3ZnPg==);
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+        .swiper-container {
+            width: 100%;
+            margin-top: 50px;
+            .swiper-button-prev {
+                background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23ee7908'%2F%3E%3C%2Fsvg%3E");
+            }
+            .swiper-button-next {
+                background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23ee7908'%2F%3E%3C%2Fsvg%3E");
+            }
+            .swiper-wrapper {
+                .swiper-slide {
+                    text-align: center;
+                    .hotspot {
+                        max-width: 100%;
+                        width: auto;
+                        display: inline-block;
+                        position: relative;
+                        img {
+                            max-width: 100%;
+                        }
+                        .mesa {
+                            position: absolute;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            text-transform: uppercase;
+                            color: #FFFFFF;
+                            font-weight: 700;
+                            &.livre {
+                                background: #328d32;
+                            }
+                            &.ocupada {
+                                background: #c20000;
+                            }
+                            &.vendida {
+                                background: #c26d00;
+                            }
+                        }
+                        #mesa_1_A7 {
+                            width: 23.3%;
+                            height: 15.5%;
+                            top: 68%;
+                            left: 26.2%;
+                        }
+                        #mesa_1_A8 {
+                            width: 23.3%;
+                            height: 15.5%;
+                            top: 68%;
+                            left: 65.2%;
+                        }
+                        #mesa_2_1 {
+                            width: 6.5%;
+                            height: 5.0%;
+                            top: 25%;
+                            left: 89%;
+                        }
+                        #mesa_2_2 {
+                            width: 7.1%;
+                            height: 5.3%;
+                            top: 18%;
+                            left: 88.9%;
+                        }
+                        #mesa_2_3 {
+                            width: 6.1%;
+                            height: 5%;
+                            top: 18%;
+                            left: 80.8%;
+                        }
+                        #mesa_2_4 {
+                            width: 6.1%;
+                            height: 5%;
+                            top: 24.8%;
+                            left: 80.8%;
+                        }
+                        #mesa_2_5 {
+                            width: 6.1%;
+                            height: 5%;
+                            top: 15.8%;
+                            left: 43.9%;
+                        }
+                        #mesa_2_6 {
+                            width: 6.1%;
+                            height: 5%;
+                            top: 15.8%;
+                            left: 33%;
+                        }
+                        #mesa_2_7 {
+                            width: 6.1%;
+                            height: 5%;
+                            top: 15.8%;
+                            left: 22%;
+                        }
+                        #mesa_2_t0 {
+                            width: 13.5%;
+                            height: 9.5%;
+                            top: 23%;
+                            left: 50.9%;
+                        }
+                        #mesa_2_t1 {
+                            width: 17%;
+                            height: 14.5%;
+                            top: 16%;
+                            left: 0.8%;
+                        }
+                        #mesa_2_t2 {
+                            width: 12%;
+                            height: 14%;
+                            top: 31%;
+                            left: 0.8%;
+                        }
+                        #mesa_2_t3 {
+                            width: 12.2%;
+                            height: 14.2%;
+                            top: 45.4%;
+                            left: 0.8%;
+                        }
+                        #mesa_3_A1 {
+                            width: 14.8%;
+                            height: 15.9%;
+                            top: 21.5%;
+                            left: 17.8%;
+                        }
+                        #mesa_3_A2 {
+                            width: 14.8%;
+                            height: 15.9%;
+                            top: 21.5%;
+                            left: 41.8%;
+                        }
+                        #mesa_3_A3 {
+                            width: 14.8%;
+                            height: 15.9%;
+                            top: 21.5%;
+                            left: 66.8%;
+                        }
+                        #mesa_3_A4 {
+                            width: 14.8%;
+                            height: 16.1%;
+                            top: 80.6%;
+                            left: 17.8%;
+                        }
+                        #mesa_3_A5 {
+                            width: 14.8%;
+                            height: 15.5%;
+                            top: 81.4%;
+                            left: 41.8%;
+                        }
+                        #mesa_3_A6 {
+                            width: 14.8%;
+                            height: 16.1%;
+                            top: 80.6%;
+                            left: 66.8%;
+                        }
+                        #mesa_4_t1 {
+                            width: 19.7%;
+                            height: 14.8%;
+                            top: 27.3%;
+                            left: 78%;
+                        }
+                        #mesa_4_t2 {
+                            width: 19.9%;
+                            height: 14.8%;
+                            top: 27.3%;
+                            left: 1.7%;
+                        }
+                        #mesa_4_1 {
+                            width: 7.1%;
+                            height: 4.8%;
+                            top: 19.6%;
+                            left: 28.9%;
+                        }
+                        #mesa_4_2 {
+                            width: 7.4%;
+                            height: 4.8%;
+                            top: 19.6%;
+                            left: 46%;
+                        }
+                        #mesa_4_3 {
+                            width: 7.5%;
+                            height: 4.8%;
+                            top: 19.6%;
+                            left: 63%;
+                        }
+                        #mesa_4_4 {
+                            width: 6.1%;
+                            height: 4.8%;
+                            top: 15.6%;
+                            left: 5%;
+                        }
+                        #mesa_5_1 {
+                            width: 21%;
+                            height: 12%;
+                            top: 82.3%;
+                            left: 29%;
+                        }
+                        #mesa_5_2 {
+                            width: 21%;
+                            height: 12%;
+                            top: 82.3%;
+                            left: 53%;
+                        }
+                        #mesa_7_1 {
+                            width: 6.1%;
+                            height: 4.5%;
+                            top: 18.6%;
+                            left: 23.1%;
+                        }
+                        #mesa_7_2 {
+                            width: 6.3%;
+                            height: 4.5%;
+                            top: 18.6%;
+                            left: 38.1%;
+                        }
+                        #mesa_7_3 {
+                            width: 6.3%;
+                            height: 4.5%;
+                            top: 18.6%;
+                            left: 53.2%;
+                        }
+                        #mesa_7_4 {
+                            width: 6%;
+                            height: 4.5%;
+                            top: 17.4%;
+                            left: 71%;
+                        }
+                        #mesa_7_5 {
+                            width: 6%;
+                            height: 4.6%;
+                            top: 17.4%;
+                            left: 7%;
+                        }
+                        #mesa_7_6 {
+                            width: 6%;
+                            height: 4.5%;
+                            top: 25.4%;
+                            left: 76.2%;
+                        }
+                        #mesa_7_T1 {
+                            width: 20.8%;
+                            height: 7.7%;
+                            top: 35.4%;
+                            left: 10.6%;
+                        }
+                        #mesa_7_T2 {
+                            width: 14%;
+                            height: 7.7%;
+                            top: 35.2%;
+                            left: 52.6%;
+                        }
+                        #mesa_7_T3 {
+                            width: 14%;
+                            height: 7.7%;
+                            top: 35.2%;
+                            left: 67.3%;
+                        }
+                        #mesa_8_1 {
+                            width: 6.1%;
+                            height: 9.5%;
+                            top: 34%;
+                            left: 14.1%;
+                        }
+                        #mesa_8_2 {
+                            width: 6.1%;
+                            height: 9.5%;
+                            top: 34%;
+                            left: 22.2%;
+                        }
+                        #mesa_8_3 {
+                            width: 6.1%;
+                            height: 9.5%;
+                            top: 34%;
+                            left: 30.2%;
+                        }
+                        #mesa_8_4 {
+                            width: 9.6%;
+                            height: 15.6%;
+                            top: 40.4%;
+                            left: 75.1%;
+                        }
+                        #mesa_8_5 {
+                            width: 9.6%;
+                            height: 15.6%;
+                            top: 40.4%;
+                            left: 87.5%;
+                        }
+                        #mesa_8_6 {
+                            width: 9.6%;
+                            height: 15.6%;
+                            top: 62.4%;
+                            left: 87.5%;
+                        }
+                        #mesa_9_C1 {
+                            width: 15.3%;
+                            height: 7.5%;
+                            top: 29.7%;
+                            left: 20.4%;
+                            transform: rotate(-14deg);
+                        }
+                        #mesa_9_C2 {
+                            width: 15.3%;
+                            height: 7.5%;
+                            top: 30.7%;
+                            left: 61.3%;
+                            transform: rotate(16deg);
+                        }
+                        #mesa_9_1 {
+                            width: 6.3%;
+                            height: 4.5%;
+                            top: 18.5%;
+                            left: 45.5%;
+                        }
+                        #mesa_9_2 {
+                            width: 9%;
+                            height: 6.9%;
+                            top: 45.1%;
+                            left: 26.8%;
+                        }
+                        #mesa_9_3 {
+                            width: 9%;
+                            height: 6.9%;
+                            top: 45.1%;
+                            left: 43.8%;
+                        }
+                        #mesa_9_4 {
+                            width: 9%;
+                            height: 6.9%;
+                            top: 45.1%;
+                            left: 60.8%;
+                        }
+                        #mesa_9_5 {
+                            width: 9%;
+                            height: 7.9%;
+                            top: 57%;
+                            left: 26.8%;
+                        }
+                        #mesa_9_6 {
+                            width: 9%;
+                            height: 7.9%;
+                            top: 57%;
+                            left: 43.8%;
+                        }
+                        #mesa_9_7 {
+                            width: 9%;
+                            height: 7.9%;
+                            top: 57%;
+                            left: 60.8%;
+                        }
+                        #mesa_9_8 {
+                            width: 9%;
+                            height: 7.9%;
+                            top: 70%;
+                            left: 26.8%;
+                        }
+                        #mesa_9_9 {
+                            width: 9%;
+                            height: 7.9%;
+                            top: 70%;
+                            left: 43.8%;
+                        }
+                        #mesa_9_10 {
+                            width: 9%;
+                            height: 7.9%;
+                            top: 70%;
+                            left: 60.8%;
+                        }
+                        #mesa_10_12 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 10%;
+                            left: 43.8%;
+                        }
+                        #mesa_10_13 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 23%;
+                            left: 43.8%;
+                        }
+                        #mesa_10_14 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 7%;
+                            left: 30.8%;
+                        }
+                        #mesa_10_15 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 17%;
+                            left: 34.8%;
+                        }
+                        #mesa_10_16 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 10%;
+                            left: 19.8%;
+                        }
+                        #mesa_10_17 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 19%;
+                            left: 21.8%;
+                        }
+                        #mesa_10_18 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 25%;
+                            left: 33.8%;
+                        }
+                        #mesa_10_19 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 28%;
+                            left: 22.8%;
+                        }
+                        #mesa_10_20 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 38%;
+                            left: 11.8%;
+                        }
+                        #mesa_10_21 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 41%;
+                            left: 23.8%;
+                        }
+                        #mesa_10_22 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 49%;
+                            left: 23.8%;
+                        }
+                        #mesa_10_23 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 58%;
+                            left: 24.8%;
+                        }
+                        #mesa_10_24 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 67%;
+                            left: 24.8%;
+                        }
+                        #mesa_10_25 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 76%;
+                            left: 25.8%;
+                        }
+                        #mesa_10_26 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 83%;
+                            left: 34.8%;
+                        }
+                        #mesa_10_27 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 83%;
+                            left: 49.8%;
+                        }
+                        #mesa_10_28 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 76%;
+                            left: 57.8%;
+                        }
+                        #mesa_10_29 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 67%;
+                            left: 57.8%;
+                        }
+                        #mesa_10_30 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 58%;
+                            left: 57.8%;
+                        }
+                        #mesa_10_31 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 50%;
+                            left: 57.8%;
+                        }
+                        #mesa_10_58 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 84%;
+                            left: 67.8%;
+                        }
+                        #mesa_10_59 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 84%;
+                            left: 78.8%;
+                        }
+                        #mesa_10_60 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 53%;
+                            left: 8.8%;
+                        }
+                        #mesa_10_61 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 62%;
+                            left: 8.8%;
+                        }
+                        #mesa_10_62 {
+                            width: 9%;
+                            height: 4.9%;
+                            top: 72%;
+                            left: 8.8%;
+                        }
+                        #mesa_11_32 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 56%;
+                            left: 8.8%;
+                        }
+                        #mesa_11_33 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 67%;
+                            left: 8.8%;
+                        }
+                        #mesa_11_34 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 79%;
+                            left: 8.8%;
+                        }
+                        #mesa_11_35 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 63%;
+                            left: 21.8%;
+                        }
+                        #mesa_11_36 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 74%;
+                            left: 21.8%;
+                        }
+                        #mesa_11_37 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 11%;
+                            left: 41.8%;
+                        }
+                        #mesa_11_38 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 27%;
+                            left: 38.8%;
+                        }
+                        #mesa_11_39 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 44%;
+                            left: 35.8%;
+                        }
+                        #mesa_11_40 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 56%;
+                            left: 35.8%;
+                        }
+                        #mesa_11_41 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 67%;
+                            left: 35.8%;
+                        }
+                        #mesa_11_42 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 80%;
+                            left: 35.8%;
+                        }
+                        #mesa_11_43 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 34%;
+                            left: 53.8%;
+                        }
+                        #mesa_11_44 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 47%;
+                            left: 51.8%;
+                        }
+                        #mesa_11_45 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 59%;
+                            left: 51.8%;
+                        }
+                        #mesa_11_46 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 73%;
+                            left: 51.8%;
+                        }
+                        #mesa_11_47 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 86%;
+                            left: 51.8%;
+                        }
+                        #mesa_11_48 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 16%;
+                            left: 80.8%;
+                        }
+                        #mesa_11_49 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 34%;
+                            left: 71.8%;
+                        }
+                        #mesa_11_50 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 47%;
+                            left: 64.8%;
+                        }
+                        #mesa_11_51 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 59%;
+                            left: 64.8%;
+                        }
+                        #mesa_11_52 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 73%;
+                            left: 64.8%;
+                        }
+                        #mesa_11_53 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 85%;
+                            left: 64.8%;
+                        }
+                        #mesa_11_54 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 47%;
+                            left: 79.8%;
+                        }
+                        #mesa_11_55 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 59%;
+                            left: 79.8%;
+                        }
+                        #mesa_11_56 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 73%;
+                            left: 79.8%;
+                        }
+                        #mesa_11_57 {
+                            width: 9%;
+                            height: 5.9%;
+                            top: 85%;
+                            left: 79.8%;
+                        }
+                        #mesa_12_T0 {
+                            width: 10%;
+                            height: 8.0%;
+                            top: 21.7%;
+                            left: 64.8%;
+                        }
+                        #mesa_12_T1 {
+                            width: 12%;
+                            height: 13%;
+                            top: 14.7%;
+                            left: 29.8%;
+                        }
+                        #mesa_12_T2 {
+                            width: 9%;
+                            height: 13%;
+                            top: 27.9%;
+                            left: 29.8%;
+                        }
+                        #mesa_12_T3 {
+                            width: 9%;
+                            height: 13%;
+                            top: 41.2%;
+                            left: 29.8%;
+                        }
+                        #mesa_12_T4 {
+                            width: 14%;
+                            height: 11%;
+                            top: 16.7%;
+                            left: 84.8%;
+                        }
+                        #mesa_12_1 {
+                            width: 6%;
+                            height: 5.5%;
+                            top: 30%;
+                            left: 43.6%;
+                        }
+                        #mesa_12_2 {
+                            width: 6%;
+                            height: 5.5%;
+                            top: 44%;
+                            left: 43.6%;
+                        }
+                        #mesa_12_3 {
+                            width: 6%;
+                            height: 5.5%;
+                            top: 58.8%;
+                            left: 43.6%;
+                        }
+                        #mesa_12_4 {
+                            width: 6%;
+                            height: 5.5%;
+                            top: 73%;
+                            left: 43.6%;
+                        }
+                        #mesa_12_5 {
+                            width: 6%;
+                            height: 5.5%;
+                            top: 87.4%;
+                            left: 43.6%;
+                        }
+                        #mesa_12_6 {
+                            width: 6%;
+                            height: 5.5%;
+                            top: 30%;
+                            left: 57.6%;
+                        }
+                        #mesa_12_7 {
+                            width: 6%;
+                            height: 5.5%;
+                            top: 44%;
+                            left: 57.6%;
+                        }
+                        #mesa_12_8 {
+                            width: 6%;
+                            height: 5.5%;
+                            top: 58.8%;
+                            left: 57.6%;
+                        }
+                        #mesa_12_9 {
+                            width: 6%;
+                            height: 5.5%;
+                            top: 73%;
+                            left: 57.6%;
+                        }
+                        #mesa_12_10 {
+                            width: 6%;
+                            height: 5.5%;
+                            top: 87.4%;
+                            left: 57.6%;
+                        }
+                        #mesa_12_11 {
+                            width: 6%;
+                            height: 5.5%;
+                            top: 36.8%;
+                            left: 72.8%;
+                        }
+                        #mesa_12_12 {
+                            width: 6%;
+                            height: 5.5%;
+                            top: 54%;
+                            left: 73.8%;
+                        }
+                        #mesa_12_13 {
+                            width: 6%;
+                            height: 5.5%;
+                            top: 80.1%;
+                            left: 67.8%;
+                        }
+                        #mesa_12_14 {
+                            width: 6%;
+                            height: 5.5%;
+                            top: 70.6%;
+                            left: 78.8%;
+                        }
+                        #mesa_12_15 {
+                            width: 6%;
+                            height: 5.5%;
+                            top: 36.3%;
+                            left: 88.8%;
+                        }
+                        #mesa_12_16 {
+                            width: 6%;
+                            height: 5.5%;
+                            top: 53.4%;
+                            left: 89.7%;
+                        }
+                        #mesa_12_17 {
+                            width: 6%;
+                            height: 5.5%;
+                            top: 67.3%;
+                            left: 92.8%;
+                        }
+                        #mesa_12_18 {
+                            width: 6%;
+                            height: 5.5%;
+                            top: 81.3%;
+                            left: 30.6%;
+                        }
+                        #mesa_12_19 {
+                            width: 6%;
+                            height: 5.5%;
+                            top: 70.5%;
+                            left: 17.6%;
+                        }
+                        #mesa_12_20 {
+                            width: 6%;
+                            height: 5.5%;
+                            top: 81.5%;
+                            left: 9.6%;
+                        }
+                        #mesa_12_21 {
+                            width: 17%;
+                            height: 5.9%;
+                            top: 91.4%;
+                            left: 6.6%;
+                        }
+                        #mesa_13_22 {
+                            width: 11%;
+                            height: 5.2%;
+                            top: 21.7%;
+                            left: 12.8%;
+                        }
+                        #mesa_13_23 {
+                            width: 11%;
+                            height: 5.2%;
+                            top: 35%;
+                            left: 12.8%;
+                        }
+                        #mesa_13_24 {
+                            width: 11%;
+                            height: 5.2%;
+                            top: 48.5%;
+                            left: 12.8%;
+                        }
+                        #mesa_13_25 {
+                            width: 11%;
+                            height: 5.2%;
+                            top: 61.8%;
+                            left: 12.8%;
+                        }
+                        #mesa_13_26 {
+                            width: 11%;
+                            height: 5.2%;
+                            top: 21.7%;
+                            left: 45.8%;
+                        }
+                        #mesa_13_27 {
+                            width: 11%;
+                            height: 5.2%;
+                            top: 35%;
+                            left: 45.8%;
+                        }
+                        #mesa_13_28 {
+                            width: 11%;
+                            height: 5.2%;
+                            top: 48.5%;
+                            left: 45.8%;
+                        }
+                        #mesa_13_29 {
+                            width: 11%;
+                            height: 5.2%;
+                            top: 61.8%;
+                            left: 45.8%;
+                        }
+                        #mesa_13_30 {
+                            width: 11%;
+                            height: 5.2%;
+                            top: 75.4%;
+                            left: 45.8%;
+                        }
+                        #mesa_13_31 {
+                            width: 11%;
+                            height: 5.2%;
+                            top: 21.7%;
+                            left: 79.8%
+                        }
+                        #mesa_13_32 {
+                            width: 11%;
+                            height: 5.2%;
+                            top: 35%;
+                            left: 79.8%
+                        }
+                        #mesa_13_33 {
+                            width: 11%;
+                            height: 5.2%;
+                            top: 48.5%;
+                            left: 79.8%
+                        }
+                        #mesa_13_34 {
+                            width: 11%;
+                            height: 5.2%;
+                            top: 61.8%;
+                            left: 79.8%
+                        }
+                        #mesa_13_35 {
+                            width: 11%;
+                            height: 5.2%;
+                            top: 75.4%;
+                            left: 79.8%
+                        }
+                        #mesa_14_M1 {
+                            width: 4%;
+                            height: 5.9%;
+                            top: 10.7%;
+                            left: 9.4%;
+                            font-size: 11px;
+                        }
+                        #mesa_14_M2 {
+                            width: 4%;
+                            height: 5.9%;
+                            top: 10.7%;
+                            left: 15.4%;
+                            font-size: 11px;
+                        }
+                        #mesa_14_M3 {
+                            width: 4%;
+                            height: 5.9%;
+                            top: 2%;
+                            left: 9.4%;
+                            font-size: 11px;
+                        }
+                        #mesa_14_M4 {
+                            width: 4%;
+                            height: 5.9%;
+                            top: 2%;
+                            left: 15.4%;
+                            font-size: 11px;
+                        }
+                        #mesa_14_C1 {
+                            width: 6.3%;
+                            height: 14.4%;
+                            top: 76%;
+                            left: 11.0%;
+                        }
+                        #mesa_14_C2 {
+                            width: 6.3%;
+                            height: 14.4%;
+                            top: 60.8%;
+                            left: 11.0%;
+                        }
+                        #mesa_14_C3 {
+                            width: 6.3%;
+                            height: 14.4%;
+                            top: 73.8%;
+                            left: 3.8%;
+                        }
+                        #mesa_14_C4 {
+                            width: 6.3%;
+                            height: 11.4%;
+                            top: 20.8%;
+                            left: 11.0%;
+                        }
+                        #mesa_14_C5 {
+                            width: 9.5%;
+                            height: 5.9%;
+                            top: 13.8%;
+                            left: 22.4%;
+                        }
+                        #mesa_14_C6 {
+                            width: 9.5%;
+                            height: 5.9%;
+                            top: 13.8%;
+                            left: 32.6%;
+                        }
+                        #mesa_14_C7 {
+                            width: 9.5%;
+                            height: 5.9%;
+                            top: 13.8%;
+                            left: 42.7%;
+                        }
+                        #mesa_14_C8 {
+                            width: 9.5%;
+                            height: 5.9%;
+                            top: 2.4%;
+                            left: 23.4%;
+                        }
+                        #mesa_14_C9 {
+                            width: 9.5%;
+                            height: 5.9%;
+                            top: 2.4%;
+                            left: 33.4%;
+                        }
+                        #mesa_14_C10 {
+                            width: 8%;
+                            height: 8.7%;
+                            top: 2.4%;
+                            left: 44.2%;
+                        }
+                        #mesa_15_A1 {
+                            width: 31%;
+                            height: 7.9%;
+                            top: 87.9%;
+                            left: 22.4%;
+                            font-size: 13px;
+                        }
+                        #mesa_15_A2 {
+                            width: 31%;
+                            height: 7.9%;
+                            top: 87.9%;
+                            left: 59.4%;
+                            font-size: 13px;
+                        }
+                        #mesa_15_A3 {
+                            width: 14%;
+                            height: 16.9%;
+                            top: 65.6%;
+                            left: 76.4%;
+                            font-size: 13px;
+                        }
+                        #mesa_15_A4 {
+                            width: 14%;
+                            height: 16.9%;
+                            top: 30.3%;
+                            left: 76.4%;
+                            font-size: 13px;
+                        }
+                        #mesa_15_A5 {
+                            width: 31%;
+                            height: 7.9%;
+                            top: 16.7%;
+                            left: 22.4%;
+                            font-size: 13px;
+                        }
+                        #mesa_15_A6 {
+                            width: 31%;
+                            height: 7.9%;
+                            top: 16.7%;
+                            left: 59.4%;
+                            font-size: 13px;
+                        }
+                        #mesa_16_A1 {
+                            width: 13.9%;
+                            height: 19.5%;
+                            top: 76.4%;
+                            left: 47.9%;
+                            font-size: 13px;
+                        }
+                        #mesa_16_A2 {
+                            width: 13.9%;
+                            height: 19.5%;
+                            top: 76.4%;
+                            left: 73.9%;
+                            font-size: 13px;
+                        }
+                        #mesa_16_A3 {
+                            width: 12%;
+                            height: 18.9%;
+                            top: 2.0%;
+                            left: 49.9%;
+                            font-size: 13px;
+                        }
+                        #mesa_16_A4 {
+                            width: 12%;
+                            height: 18.9%;
+                            top: 2.0%;
+                            left: 73.9%;
+                            font-size: 13px;
+                        }
+                    }
+                    .mesas {
+                        margin-top: 20px;
+                        .mesa {
+                            width: 100%;
+                            background: #FFFFFF;
+                            display: flex;
+                            margin-top: 3px;
+                            align-items: center;
+                            justify-content: flex-start;
+                            max-width: 300px;
+                            margin: 0 auto;
+                            margin-top: 3px;
+                            position: relative;
+                            flex-wrap: wrap;
+                            .topo {
+                                padding: 0 20px;
+                                width: 100%;
+                                height: 60px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: flex-start;
+                                position: relative;
+                            }
+                            .codigo {
+                                font-weight: 700;
+                                font-size: 15px;
+                                display: block;
+                                text-align: center;
+                                width: 23px;
+                            }
+                            .estado {
+                                width: calc(100% - 65px);
+                                height: 100%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                top: 0;
+                                right: 0;
+                                position: absolute;
+                                font-weight: 300;
+                                font-size: 14px;
+                                color: #FFFFFF;
+                                font-weight: 700;
+                                &.livre {
+                                    background: #328d32;
+                                }
+                                &.ocupada {
+                                    background: #c20000;
+                                }
+                                &.vendida {
+                                    background: #c26d00;
+                                }
+                            }
+                            .info_reserva {
+                                width: 100%;
+                                display: flex;
+                                justify-content: space-between;
+                                flex-wrap: wrap;
+                                padding: 10px 0;
+                                padding-bottom: 0;
+                                .bloco {
+                                    width: 50%;
+                                    padding: 10px 20px;
+                                    .titulo {
+                                        font-weight: bold;
+                                        width: 100%;
+                                        display: block;
+                                        text-align: left;
+                                        margin-bottom: 5px;
+                                        font-size: 13px;
+                                    }
+                                    .valor {
+                                        display: block;
+                                        text-align: left;
+                                        font-size: 12px;
+                                    }
+                                }
+                                .cancelar {
+                                    width: 100%;
+                                    height: 40px;
+                                    max-width: 100%;
+                                    background-color: #000000;
+                                    color: #ffffff;
+                                    font-size: 12px;
+                                    font-weight: 700;
+                                    text-transform: uppercase;
+                                    text-align: center;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                }
+                                .pagamento {
+                                    width: 100%;
+                                    height: 40px;
+                                    max-width: 100%;
+                                    background-color: #328d32;
+                                    color: #ffffff;
+                                    font-size: 12px;
+                                    font-weight: 700;
+                                    text-transform: uppercase;
+                                    text-align: center;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+body {
+    .swal-button:not([disabled]):hover {
+        &.swal-button--confirm {
+            background: #ee7908;
+        }
+        &.swal-button--danger {
+            background-color: #df4740;
+        }
+    }
+    .swal-button:active {
+        &.swal-button--confirm {
+            background: #ee7908;
+        }
+        &.swal-button--danger {
+            background-color: #df4740;
+        }
+    }
+    .swal-button {
+        &.swal-button--confirm {
+            background: #ee7908;
+        }
+        &.swal-button--danger {
+            background-color: #e64942;
+        }
+    }
+}
+
+.content .perfil .conta-corrente-homepage {
+    display: block;
+    margin: 20px 0;
+    background: rgba(242, 242, 242, 0.15);
+    padding: 20px;
+    border: 1px solid #f2f2f2;
+    .saldo {
+        display: block;
+        .titulo {
+            display: block;
+            font-weight: bold;
+            text-align: center;
+        }
+        .valor {
+            display: block;
+            font-size: 20px;
+            text-align: center;
+            margin-top: 10px;
+            &.recebido {
+                font-weight: 600;
+                color: #179c17;
+                font-size: 20px;
+            }
+            &.pago {
+                font-weight: 600;
+                color: #ea3939;
+                font-size: 20px;
+            }
+        }
+    }
+    a {
+        color: #ee7908;
+        font-size: 13px;
+        margin-top: 20px;
+        display: block;
+    }
+}
+
+.fancybox-content {
+    .acao {
+        position: relative;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        .gravar {
+            margin-right: left;
+            display: inline-block;
+            font-weight: 400;
+            color: #212529;
+            text-align: center;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-color: transparent;
+            border: 1px solid transparent;
+            padding: 0.375rem 0.75rem;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            border-radius: 0.25rem;
+            color: #fff;
+            background-color: #00c292;
+            margin-top: 20px;
+            border-color: #00c292;
+        }
+    }
+    &.virtual {
+        width: 900px;
+        input {
+            border: 0;
+            width: 100%;
+            height: 50px;
+            padding: 0 20px;
+            font-size: 19px;
+        }
+    }
+}
+
+.escolha-garrafas-responsive {
+    flex-wrap: wrap;
+    width: 600px;
+    max-width: 100%;
+    display: flex;
+    max-height: calc(100vh - 160px);
+    overflow: auto;
+    .garrafa-div {
+        &:first-child {
+            border-top: 1px solid #134563;
+        }
+        &:nth-child(2) {
+            border-top: 1px solid #134563;
+        }
+        &:nth-child(even) {
+            border-right: 1px solid #134563;
+        }
+        &:nth-child(odd) {
+            border-right: 1px solid #134563;
+            border-left: 1px solid #134563;
+        }
+        border-bottom:1px solid #134563;
+        padding: 10px 0;
+        display: flex;
+        align-items:center;
+        justify-content: space-between;
+        width:50%;
+        padding-left:15px;
+        padding-right:15px;
+        .nome {}
+        .input-quantidade {
+            padding: 10px 10px;
+            display: flex;
+            .menos {
+                width: 35px;
+                margin-right: 6px;
+                img {
+                    max-width: 100%;
+                }
+            }
+            input[type=number]::-webkit-inner-spin-button,
+            input[type=number]::-webkit-outer-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+            input[type="number"] {
+                max-width: 40px;
+                color: #134563;
+                border: 0;
+                text-align: center;
+                font-size: 18px;
+                font-weight: 800;
+            }
+            .mais {
+                width: 35px;
+                margin-left: 6px;
+                img {
+                    max-width: 100%;
+                }
+            }
+        }
+    }
+}
+
+.escolha-garrafas-responsive {
+    width: 100%;
+    flex-wrap: wrap;
+    max-height: calc(100vh - 89px);
+    .garrafa-div {
+        width: 100%;
+        border: 1px solid #134563;
+        .nome {
+            font-size: 14px;
+        }
+        .input-quantidade {
+            padding: 5px 0;
+        }
+    }
+}
+
+.fancybox-active .fancybox-content {
+    padding: 10px;
+}

@@ -1,0 +1,27 @@
+/* main colors */
+/* other colors */
+/* frontend colors */
+@media all and (max-width: 768px) {
+  body .apresentacao,
+  body form {
+    width: 100%;
+    position: relative;
+  }
+  body .apresentacao {
+    display: none;
+  }
+  body form {
+    padding: 15px;
+    padding-bottom: 50px;
+  }
+  body form .form-login {
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+  }
+  body form .form-login .logotipo {
+    width: 100%;
+    text-align: center;
+  }
+}
+/*# sourceMappingURL=style-768.css.map */

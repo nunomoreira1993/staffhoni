@@ -1,0 +1,28 @@
+@charset "UTF-8";
+@import "variables";
+@import "mixins";
+@media all and (max-width:768px) {
+    body {
+        .apresentacao,
+        form {
+            width: 100%;
+            position: relative;
+        }
+        .apresentacao {
+            display: none;
+        }
+        form {
+            padding: 15px;
+            padding-bottom: 50px;
+            .form-login {
+                width: 100%;
+                max-width: 450px;
+                margin: 0 auto;
+                .logotipo {
+                    width: 100%;
+                    text-align: center;
+                }
+            }
+        }
+    }
+}

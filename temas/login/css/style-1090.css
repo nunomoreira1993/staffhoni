@@ -1,0 +1,12 @@
+/* main colors */
+/* other colors */
+/* frontend colors */
+@media all and (max-width: 1090px) {
+  body form {
+    padding: 0 40px;
+  }
+  body form .form-login {
+    max-width: 100%;
+  }
+}
+/*# sourceMappingURL=style-1090.css.map */

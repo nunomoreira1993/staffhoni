@@ -1,0 +1,10 @@
+EM falta:
+    -> Adicionar cartões consumo obrigatorio : 2 cartões por staff/rp
+    -> Funcionario: 
+        -> Pesquisa por nome da pessoa, resultado nome da pessoa + RP que o adicionou.
+        -> Visto que não contabiliza para a contagem global.
+    
+    -> RP :: MODO APP 
+        -> Obrigatorio alterar password no primeiro Login 
+        -> Podem adicionar 2 cartões por staff 
+        

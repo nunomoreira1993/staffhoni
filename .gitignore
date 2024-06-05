@@ -1,0 +1,5 @@
+fotos/**/*.jpg
+fotos/**/*.png
+fotos/**/*.jpeg
+fotos/**/*.jfif
+lib/config.php
