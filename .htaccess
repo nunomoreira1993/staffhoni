@@ -81,18 +81,20 @@ RewriteRule (.*) https://www.staffhoni.com/$1 [R=301,L]
 
 # Force SSL
 RewriteCond %{HTTPS} off
-RewriteCond %{HTTP_HOST} !^(.*)\.dev$ [NC]
-RewriteCond %{HTTP_HOST} !^(.*)\.local$ [NC]
-RewriteCond %{HTTP_HOST} !^(.*)\.searadev\.com$ [NC]
+RewriteCond %{HTTP_HOST} !^(.*)\.dev:8001$ [NC]
+RewriteCond %{HTTP_HOST} !^(.*)\.local:8001$ [NC]
 RewriteCond %{REQUEST_URI} !^/\.well-known/(.*) [NC]
 RewriteRule .* https://www.staffhoni.com%{REQUEST_URI} [L,R=301]
 
 # Require the www
 RewriteCond %{HTTP_HOST} !^$
 RewriteCond %{HTTP_HOST} !^(.*)\.dev$ [NC]
-RewriteCond %{HTTP_HOST} !^(.*)\.local$ [NC]
-RewriteCond %{HTTP_HOST} !^(.*)\.searadev\.com$ [NC]
+RewriteCond %{HTTP_HOST} !^(.*)\.local:8001$ [NC]
 RewriteCond %{REQUEST_URI} !^/\.well-known/(.*) [NC]
 RewriteCond %{HTTP_HOST} !^www\. [NC]
 RewriteCond %{HTTPS}s ^on(s)|
 RewriteRule ^/?(.*) https://www.staffhoni.com/$1 [L,R,NE]
+
+# Disable file access .sql
+RewriteCond %{REQUEST_URI} (?i)^/database/.*$
+RewriteRule .* - [F,L]
