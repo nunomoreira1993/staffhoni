@@ -81,7 +81,7 @@ class rp {
 	}
 
 	function devolveInfo() {
-		$sql = "SELECT rps.foto, rps.nome, rps.id, rps_cargos.nome as nome_cargo FROM rps LEFT JOIN rps_cargos ON rps.id_cargo = rps_cargos.id WHERE rps.id = " . $this->rp . " ";
+		$sql = "SELECT rps.foto, rps.nome, rps.id, rps_cargos.nome as nome_cargo, rps.qrcode FROM rps LEFT JOIN rps_cargos ON rps.id_cargo = rps_cargos.id WHERE rps.id = " . $this->rp . " ";
 		$res = $this->db->query($sql);
 		if ($res) {
 			if ($res[0]['foto'] && file_exists($_SERVER['DOCUMENT_ROOT'] . "/fotos/rps/" . $res[0]['foto'])) {

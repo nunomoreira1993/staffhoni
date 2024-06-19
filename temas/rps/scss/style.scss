@@ -1155,6 +1155,146 @@ body {
                             left: 76.9%;
                             border-radius: 100%;
                         }
+                        #mesa_3_1 {
+                            width: 9%;
+                            height: 6.46%;
+                            top: 71.6%;
+                            left: 74.2%;
+                            border-radius: 100%;
+                        }
+                        #mesa_3_2 {
+                            width: 9%;
+                            height: 6.46%;
+                            top: 60.6%;
+                            left: 74.2%;
+                            border-radius: 100%;
+                        }
+                        #mesa_3_3 {
+                            width: 9%;
+                            height: 6.46%;
+                            top: 49.6%;
+                            left: 74.2%;
+                            border-radius: 100%;
+                        }
+                        #mesa_3_4 {
+                            width: 9%;
+                            height: 6.46%;
+                            top: 39.6%;
+                            left: 74.2%;
+                            border-radius: 100%;
+                        }
+                        #mesa_3_5 {
+                            width: 9%;
+                            height: 6.46%;
+                            top: 27.6%;
+                            left: 74.2%;
+                            border-radius: 100%;
+                        }
+                        #mesa_3_6 {
+                            width: 9%;
+                            height: 6.46%;
+                            top: 71.6%;
+                            left: 59.2%;
+                            border-radius: 100%;
+                        }
+                        #mesa_3_7 {
+                            width: 9%;
+                            height: 6.46%;
+                            top: 49.6%;
+                            left: 59.2%;
+                            border-radius: 100%;
+                        }
+                        #mesa_3_8 {
+                            width: 9%;
+                            height: 6.46%;
+                            top: 39.6%;
+                            left: 62.2%;
+                            border-radius: 100%;
+                        }
+                        #mesa_3_9 {
+                            width: 9%;
+                            height: 6.46%;
+                            top: 28.6%;
+                            left: 60.2%;
+                            border-radius: 100%;
+                        }
+                        #mesa_3_10 {
+                            width: 9%;
+                            height: 6.46%;
+                            top: 71.6%;
+                            left: 46.2%;
+                            border-radius: 100%;
+                        }
+                        #mesa_3_11 {
+                            width: 9%;
+                            height: 6.46%;
+                            top: 49.6%;
+                            left: 46.2%;
+                            border-radius: 100%;
+                        }
+                        #mesa_3_12 {
+                            width: 9%;
+                            height: 6.46%;
+                            top: 27.6%;
+                            left: 46.2%;
+                            border-radius: 100%;
+                        }
+                        #mesa_3_13 {
+                            width: 9%;
+                            height: 6.46%;
+                            top: 71.6%;
+                            left: 32.2%;
+                            border-radius: 100%;
+                        }
+                        #mesa_3_14 {
+                            width: 9%;
+                            height: 6.46%;
+                            top: 46.6%;
+                            left: 32.2%;
+                            border-radius: 100%;
+                        }
+                        #mesa_3_15 {
+                            width: 9%;
+                            height: 6.46%;
+                            top: 71.6%;
+                            left: 17.2%;
+                            border-radius: 100%;
+                        }
+                        #mesa_3_16 {
+                            width: 9%;
+                            height: 6.46%;
+                            top: 60.6%;
+                            left: 17.2%;
+                            border-radius: 100%;
+                        }
+                        #mesa_3_17 {
+                            width: 9%;
+                            height: 6.46%;
+                            top: 84.6%;
+                            left: 17.2%;
+                            border-radius: 100%;
+                        }
+                        #mesa_3_18 {
+                            width: 9%;
+                            height: 6.46%;
+                            top: 84.6%;
+                            left: 31.2%;
+                            border-radius: 100%;
+                        }
+                        #mesa_3_19 {
+                            width: 9%;
+                            height: 6.46%;
+                            top: 84.6%;
+                            left: 46.2%;
+                            border-radius: 100%;
+                        }
+                        #mesa_3_20 {
+                            width: 9%;
+                            height: 6.46%;
+                            top: 84.6%;
+                            left: 60.2%;
+                            border-radius: 100%;
+                        }
                     }
 
                     .mesas {
@@ -1316,12 +1456,41 @@ body {
     }
 }
 
+.qrcode-rp-homepage{
+    margin: 20px 0;
+    display: block;
+    width: 100%;
+    text-align: center;
+    .image {
+        width: 100%;
+        img {
+            width: 100%;
+        }
+
+    }
+    .download {
+        display: block;
+        margin:0  auto;
+        background: rgba(242, 242, 242, 0.15);
+        padding: 20px;
+        border: 1px solid #f2f2f2;
+        width: 300px;
+        .link {
+            color: #ee7908;
+            font-size: 13px;
+            margin-top: 20px;
+            display: block;
+        }
+    }
+}
 .content .perfil .conta-corrente-homepage {
     display: block;
     margin: 20px 0;
     background: rgba(242, 242, 242, 0.15);
     padding: 20px;
     border: 1px solid #f2f2f2;
+    width: 300px;
+    text-align: center;
 
     .saldo {
         display: block;

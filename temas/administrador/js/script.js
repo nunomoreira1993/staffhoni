@@ -1455,3 +1455,35 @@ var cargos = {
 		}
 	}
 }
+
+
+function openPopupQRCode(status, message = "", type = "") {
+    $.fancybox.open({
+        src: "#error_success",
+        type: 'inline',
+        toolbar: false,
+        touch: {
+            vertical: false,
+            horizontal: false
+        },
+        smallBtn: true,
+        beforeClose: function (){
+            qrScanner.start();
+            $('#error_success').removeClass("success");
+            $('#error_success').removeClass("error");
+        },
+        afterShow: function afterShow(instance, current) {
+            if(status == 2) {
+                $('#error_success').removeClass("success");
+                $('#error_success').addClass("error");
+                $('.error .mensagem').html(message);
+            }
+            else {
+                $('#error_success').removeClass("error");
+                $('#error_success').addClass("success");
+                $('.sucesso .mensagem .nome_cliente').html(message);
+                $('.sucesso h2 .tipo_bilhete').html(type);
+            }
+        }
+    });
+}

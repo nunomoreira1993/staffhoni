@@ -8,7 +8,7 @@ if (isset($_GET['pg'])) {
 if ($tipo == 1) {
     $default =  $_SERVER['DOCUMENT_ROOT'] . "/administrador/administradores/administradores.php";
 } else if ($tipo == 2) {
-    $default =  $_SERVER['DOCUMENT_ROOT'] . "/administrador/entradas/adicionar_entradas.php";
+    $default =  $_SERVER['DOCUMENT_ROOT'] . "/administrador/entradas/qrcode.php";
 } else if ($tipo == 3) {
     $default = $_SERVER['DOCUMENT_ROOT'] . "/administrador/privados/venda_privados.php";
 } else if ($tipo == 4) {
@@ -48,6 +48,10 @@ switch ($pg) {
 
     case 'entradas_rp':
         include $_SERVER['DOCUMENT_ROOT'] . "/administrador/rps/entradas_rp.php";
+        break;
+
+    case 'qrcode':
+        include $_SERVER['DOCUMENT_ROOT'] . "/administrador/entradas/qrcode.php";
         break;
 
     case 'eventos_entradas':

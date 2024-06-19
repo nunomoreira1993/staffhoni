@@ -89,7 +89,7 @@ $tipo = $adm['tipo'];
                 }
                 if ($tipo == 2 || $tipo == 1 || $tipo == 7) {
                 ?>
-                    <li <?php if ($_GET['pg'] == "adicionar_entradas" || $_GET['pg'] == "gerir_entradas" || $_GET['pg'] == "eventos_entradas" || $_GET['pg'] == "entradas_evento_rps" || $_GET['pg'] == "entradas_evento_produtor" || $_GET['pg'] == "entradas_evento_equipa" || $_GET['pg'] == "cartoes_consumo_obrigatorio" || $_GET['pg'] == "cartoes_sem_consumo" || $_GET['pg'] == "entradas_evento_data") { ?> class="active" <?php } ?>>
+                    <li <?php if ($_GET['pg'] == "adicionar_entradas" || $_GET['pg'] == "gerir_entradas" || $_GET['pg'] == "qrcode" || $_GET['pg'] == "eventos_entradas" || $_GET['pg'] == "entradas_evento_rps" || $_GET['pg'] == "entradas_evento_produtor" || $_GET['pg'] == "entradas_evento_equipa" || $_GET['pg'] == "cartoes_consumo_obrigatorio" || $_GET['pg'] == "cartoes_sem_consumo" || $_GET['pg'] == "entradas_evento_data") { ?> class="active" <?php } ?>>
                         <a class="link" href="javascript:void(0)" aria-expanded="false">
                             <i class="icone"></i>
                             <span class="nome">Entradas</span>
@@ -107,6 +107,11 @@ $tipo = $adm['tipo'];
                             }
                             else {
                                 ?>
+                                <li>
+                                    <a href="?pg=qrcode" <?php if ($_GET['pg'] == "qrcode") { ?> class="active" <?php } ?>>
+                                        Leitor QR Code
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="?pg=adicionar_entradas&letra=a" <?php if ($_GET['pg'] == "adicionar_entradas") { ?> class="active" <?php } ?>>
                                         Adicionar entradas

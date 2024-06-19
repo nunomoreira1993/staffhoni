@@ -2,6 +2,17 @@
 require_once($_SERVER['DOCUMENT_ROOT'] . '/rp/rp.obj.php');
 $dbrp = new rp($db, $_SESSION['id_rp']);
 $rp = $dbrp->devolveInfo();
+if(empty($rp["qrcode"])){
+	$qrcode_hash = md5(strtotime("now") . $rp["id"]);
+	$db->update("rps", array("qrcode"=> $qrcode_hash), "id = " . $rp["id"]);
+	include_once($_SERVER["DOCUMENT_ROOT"] . '/plugins/phpqrcode/lib/full/qrlib.php');
+	$qrcode =  "/fotos/convites/" . "honi_qrcode_" . $rp["id"].".png";
+	QRcode::png($qrcode_hash, $_SERVER["DOCUMENT_ROOT"] . $qrcode, QR_ECLEVEL_L, 35, 2);
+	$rp = $dbrp->devolveInfo();
+}
+else {
+	$qrcode =  "/fotos/convites/" . "honi_qrcode_" . $rp["id"].".png";
+}
 $eventos = $dbrp->listaEventosRP();
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/administrador/pagamentos/pagamentos.obj.php');
@@ -18,6 +29,12 @@ $pagamento = $dbpagamentos->devolvePagamento($_SESSION['id_rp']);
 	<span class="cargo">
 		<?php echo $rp['nome_cargo']; ?>
 	</span>
+	<div class="qrcode-rp-homepage">
+		<a href="/download_qrcode.php?rp=1&id=<?php echo $_SESSION['id_rp']; ?>" class="download">
+			<span class="image"><img src="<?php echo $qrcode; ?>" /></span>
+			<span class="link">Download QR Code</span>
+		</a>
+	</div>
 	<div class="conta-corrente-homepage">
 		<div class="saldo">
 			<span class="titulo">

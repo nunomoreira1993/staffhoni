@@ -55,6 +55,11 @@ class rps {
 		$res = $this->db->query($query);
 		return $res[0];
 	}
+	function getRPByQRCode($qrcode) {
+		$query = "SELECT * FROM rps WHERE rps.qrcode = '$qrcode'";
+		$res = $this->db->query($query);
+		return $res[0];
+	}
 	function listaRPs($letra = false, $entradas = false, $gerente = false, $tipos = false, $filtros = false, $limit = false) {
 		$where = "";
 		if ($filtros) {
