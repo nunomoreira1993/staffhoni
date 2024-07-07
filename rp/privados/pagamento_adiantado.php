@@ -5,6 +5,7 @@ $dbrp = new rp($db, $_SESSION['id_rp']);
 require_once($_SERVER['DOCUMENT_ROOT'] . '/rp/privados/privados.obj.php');
 $dbprivados = new privados($db);
 
+
 $permissao = $dbrp->permissao();
 
 $rps = $dbrp->listaRps();
@@ -24,6 +25,7 @@ if (empty($reserva)) {
 }
 
 $mesa = $dbprivados->devolveMesa($_GET['id_mesa']);
+
 if (empty($permissao)) {
     $_SESSION['erro'] = "Não tem permissão para aceder a esta página.";
     header('Location: /rp/index.php?pg=disponibilidade_de_mesas&data_evento=' . $_GET['data_evento'] . '#sala_' . $mesa['id_sala']);
@@ -39,9 +41,7 @@ if (empty($mesa)) {
 }
 
 if ($_GET['id_mesa']) {
-
     $cartao = $dbprivados->verificaMesaDisponivel(intval($_GET['id_mesa']), $_GET['data_evento']);
-
     if (!empty($cartao)) {
         $_SESSION['erro'] = "A mesa que está a tentar efectuar o pagamento antecipado ainda não tem reserva criada.";
         header('Location: /rp/index.php?pg=disponibilidade_de_mesas&data_evento=' . $_GET['data_evento'] . '#sala_' . $mesa['id_sala']);
@@ -83,7 +83,7 @@ if ($_POST) {
         <span class="label"> Voltar </span>
     </a>
 
-    <form name="formulario" class="consumo-obrigatorio" data-incremento="<?php echo count($campos['input']); ?>" action="" method="post">
+    <form name="formulario" class="pagamento-adiantado" action="" method="post">
 
         <div class="inputs">
             <div class="label">
