@@ -170,7 +170,7 @@ if ($campos) {
         <?php
         if ($tipo != 1) {
 			// if(empty($venda['id_rp'])){
-				$venda['id_rp'] = 103;
+				$venda['id_rp'] = 585;
 			// }
         ?>
             <input type="hidden" value="<?php echo $venda['id_rp']; ?>" name="id_rp" />
