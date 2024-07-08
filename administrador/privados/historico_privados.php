@@ -36,6 +36,7 @@ $vendasDias = $dbprivados->listaVendasDiasTotal();
 
                         <td class="text-nowrap">
                             <div class="opcoes">
+                                <a href="/administrador/exportar/exportar_privados_garrafas.php?data=<?php echo $venda['data_evento']; ?>" class="exportar-excell"> Exportar Garrafas </a>
                                 <a href="/administrador/exportar/exportar_privados.php?data=<?php echo $venda['data_evento']; ?>" class="exportar-excell"> Exportar para Excell </a>
                                 <a href="?pg=privados_evento_data&data=<?php echo $venda['data_evento']; ?>" class="entradas"> Ver vendas evento </a>
                             </div>
