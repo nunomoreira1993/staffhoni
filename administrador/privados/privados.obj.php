@@ -116,7 +116,7 @@ class privados
         }
         $query = "SELECT venda_garrafas_bar.*, rps.nome as nome_rp, rps_processado.nome as nome_processado FROM venda_garrafas_bar INNER JOIN rps ON rps.id = venda_garrafas_bar.id_rp LEFT JOIN rps rps_processado ON rps_processado.id = venda_garrafas_bar.id_processado $where ORDER BY id DESC";
         $res = $this->db->query($query);
-		
+
         foreach ($res as $i => $rs) {
             if ($rs['pagamento'] == 1) {
                 $res[$i]['pagamento'] = "Multibanco";
@@ -261,6 +261,18 @@ class privados
     function devolveGarrafaVendaPrivados($id)
     {
         $query = "SELECT venda_privados_garrafas.quantidade, venda_privados_garrafas.id_garrafa, garrafas.nome FROM venda_privados_garrafas INNER JOIN garrafas ON garrafas.id = venda_privados_garrafas.id_garrafa  WHERE venda_privados_garrafas.id_compra = '" . $id .  "' ORDER BY venda_privados_garrafas.id ASC";
+        return  $this->db->query($query);
+    }
+
+    function devolveGarrafaVendaPrivadosData($data_evento)
+    {
+        $query = "SELECT SUM(venda_privados_garrafas.quantidade) as quantidade, venda_privados_garrafas.id_garrafa, garrafas.nome FROM venda_privados_garrafas INNER JOIN garrafas ON garrafas.id = venda_privados_garrafas.id_garrafa INNER JOIN venda_privados ON venda_privados.id = venda_privados_garrafas.id_compra  WHERE venda_privados.data_evento = '" . $data_evento .  "' GROUP BY venda_privados_garrafas.id_garrafa ORDER BY venda_privados_garrafas.id ASC";
+        return  $this->db->query($query);
+    }
+
+    function devolveGarrafaVendaGarrafasData($data_evento)
+    {
+        $query = "SELECT SUM(venda_garrafas_bar_garrafas.quantidade) as quantidade, venda_garrafas_bar_garrafas.id_garrafa, garrafas.nome FROM venda_garrafas_bar_garrafas INNER JOIN garrafas ON garrafas.id = venda_garrafas_bar_garrafas.id_garrafa INNER JOIN venda_garrafas_bar ON venda_garrafas_bar.id = venda_garrafas_bar_garrafas.id_compra  WHERE venda_garrafas_bar.data_evento = '" . $data_evento .  "' GROUP BY venda_garrafas_bar_garrafas.id_garrafa ORDER BY venda_garrafas_bar_garrafas.id ASC";
         return  $this->db->query($query);
     }
 
