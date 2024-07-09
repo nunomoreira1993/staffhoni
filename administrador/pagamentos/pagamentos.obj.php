@@ -34,7 +34,7 @@ class pagamentos
         $res = $this->db->query($query);
         return $res[0];
     }
-    function converteEntradasToEuro($entradas, $id_rp)
+    function converteEntradasToEuro($entradas, $id_rp, $entrou = 0)
     {
         if ($id_rp) {
 
@@ -42,7 +42,7 @@ class pagamentos
             $resentradas = $this->db->query($query);
             if ($resentradas[0]['regra_entradas'] == 1) {
 
-                $query = "SELECT * FROM logica_pagamentos WHERE pessoal = 1  ORDER BY de ASC";
+                $query = "SELECT * FROM logica_pagamentos WHERE pessoal = 1 AND sessao = " . $entrou . " ORDER BY de ASC";
                 $res = $this->db->query($query);
 
                 $total = 0;
@@ -152,13 +152,26 @@ class pagamentos
 
     function listaEventosRP($id_rp, $data_evento)
     {
+
+        #saber se deu entrada ou não
+        $query = "SELECT * FROM presencas WHERE id_rp = '" . $id_rp . "' AND data_evento = '" . $data_evento . "'";
+        $entradaRP = $this->db->query($query);
+
+        $entrouNoite = 0;
+        $extraDescricao = "(SEM SESSÃO)";
+        if($entradaRP) {
+            $entrouNoite = 1;
+            $extraDescricao = "(COM SESSÃO)";
+        }
+
         $query = "SELECT sum(rps_entradas.quantidade) as quantidade FROM rps_entradas INNER JOIN rps ON rps.id = rps_entradas.id_rp AND rps.comissao_guest = 1  WHERE  rps_entradas.id_rp = " . $id_rp . " AND rps_entradas.data_evento = '" . $data_evento . "' GROUP BY rps_entradas.data_evento DESC";
         $eventoRP = $this->db->query($query);
 
+
         if ($eventoRP[0]['quantidade'] > 0) {
             $eventos_return['entrou'] = intval($eventoRP[0]['quantidade']);
-            $eventos_return['descricao'] = "<b>" . $data_evento . "</b>: " . intval($eventoRP[0]['quantidade']) . " entradas";
-            $eventos_return['comissao'] = $this->converteEntradasToEuro($eventoRP[0]['quantidade'], $id_rp);
+            $eventos_return['descricao'] = "<b>" . $data_evento . " " . $extraDescricao . "</b>: " . intval($eventoRP[0]['quantidade']) . " entradas";
+            $eventos_return['comissao'] = $this->converteEntradasToEuro($eventoRP[0]['quantidade'], $id_rp, $entrouNoite);
             $eventos_return['descricao_bonus'] = "<b>" . $data_evento . "</b>: Bonus Entradas: ";
             $eventos_return['comissao_bonus'] = $this->converteEntradasBonusToEuro($eventoRP[0]['quantidade'], $id_rp);
 
@@ -168,13 +181,17 @@ class pagamentos
 
     function listaEventosEquipaRP($id_rp, $data_evento)
     {
+        $query = " SELECT COUNT(id) as conta FROM rps WHERE id_chefe_equipa = '" . $id_rp . "'";
+        $elementos = $this->db->query($query);
+
+
         $query = "SELECT sum(rps_entradas.quantidade) as quantidade FROM rps_entradas INNER JOIN rps ON rps.id = rps_entradas.id_rp AND rps.comissao_guest = 1  WHERE ( rps.id_chefe_equipa = " . $id_rp . " OR  ( rps.id = " . $id_rp . " AND rps.id_cargo = 20 )  ) AND rps_entradas.data_evento = '" . $data_evento . "' GROUP BY rps_entradas.data_evento DESC";
         $eventoRP = $this->db->query($query);
 
         if ($eventoRP[0]['quantidade'] > 0) {
             $eventos_return['entrou'] = intval($eventoRP[0]['quantidade']);
-            $eventos_return['descricao'] = "<b>" . $data_evento . "</b> Equipa: " . intval($eventoRP[0]['quantidade']) . " entradas";
-            $eventos_return['comissao'] = $this->converteEntradasEquipaToEuro($eventoRP[0]['quantidade'], $id_rp);
+            $eventos_return['descricao'] = "<b>" . $data_evento . "</b> Equipa ( " . $elementos[0]["conta"] . " elementos ): " . intval($eventoRP[0]['quantidade']) . " entradas";
+            $eventos_return['comissao'] = ($elementos[0]["conta"] >= 25) ? ($this->converteEntradasEquipaToEuro($eventoRP[0]['quantidade'], $id_rp)) : 0;
             $eventos_return['descricao_bonus'] = "<b>" . $data_evento . "</b>: Bónus de Equipa: ";
             $eventos_return['comissao_bonus'] = $this->converteEntradasBonusEquipaToEuro($eventoRP[0]['quantidade'], $id_rp);
 
@@ -226,6 +243,7 @@ class pagamentos
                     $privados_chefe = $this->devolveComissaoPrivadosChefe($id_rp, $data_evento);
                     $atrasos = $this->devolveAtrasos($id_rp, $data_evento);
                     // $convites = $this->devolveValidaConvite($id_rp, $data_evento);
+                    $sessoes = $this->devolveComissaoSessoesChefe($id_rp, $data_evento);
 
                     if ($guest['comissao'] > 0) {
                         $return['guest']['comissao'] += $guest["comissao"];
@@ -237,7 +255,7 @@ class pagamentos
                         $descricao_guest_bonus = $guest["descricao_bonus"] . " - " . euro($guest["comissao_bonus"]);
                         $return['guest']["descricao_bonus"] = $return['guest']['descricao_bonus'] ? $return['guest']['descricao_bonus'] . " </br> " . $descricao_guest_bonus : "" . $descricao_guest_bonus;
                     }
-                    if ($guest_team['comissao'] > 0) {
+                    if ($guest_team['descricao']) {
                         $return['guest_team']['comissao'] += $guest_team["comissao"];
                         $descricao_guest_team = $guest_team["descricao"] . " - " . euro($guest_team["comissao"]);
                         $return['guest_team']["descricao"] = $return['guest_team']['descricao'] ? $return['guest_team']['descricao'] . " </br> " . $descricao_guest_team : "" . $descricao_guest_team;
@@ -263,10 +281,15 @@ class pagamentos
                         $descricao_atrasos = $atrasos["descricao"] . " - " . euro($atrasos["comissao"]);
                         $return['atrasos']["descricao"] = $return['atrasos']['descricao'] ? $return['atrasos']['descricao'] . " </br> " . $descricao_atrasos : "" . $descricao_atrasos;
                     }
-                    if ($convites['comissao'] > 0) {
-                        $return['convites']['comissao'] += $convites["comissao"];
-                        $descricao_convites = $convites["descricao"] . " - " . euro($convites["comissao"]);
-                        $return['convites']["descricao"] = $return['convites']['descricao'] ? $return['convites']['descricao'] . " </br> " . $descricao_convites : "" . $descricao_convites;
+                    // if ($convites['comissao'] > 0) {
+                    //     $return['convites']['comissao'] += $convites["comissao"];
+                    //     $descricao_convites = $convites["descricao"] . " - " . euro($convites["comissao"]);
+                    //     $return['convites']["descricao"] = $return['convites']['descricao'] ? $return['convites']['descricao'] . " </br> " . $descricao_convites : "" . $descricao_convites;
+                    // }
+                    if ($sessoes['comissao'] > 0) {
+                        $return['sessoes']['comissao'] += $sessoes["comissao"];
+                        $descricao_sessoes = $sessoes["descricao"] . " - " . euro($sessoes["comissao"]);
+                        $return['sessoes']["descricao"] = $return['sessoes']['descricao'] ? $return['sessoes']['sessoes'] . " </br> " . $descricao_sessoes : "" . $descricao_sessoes;
                     }
                 }
             }
@@ -285,7 +308,7 @@ class pagamentos
 
 			$return['extras'] = $this->devolveValoresExtras($id_rp);
 
-			$return['total'] = $return['guest']['comissao'] + $return['guest']['comissao_bonus'] + $return['guest_team']['comissao'] + $return['guest_team']['comissao_bonus'] + $return['privados']['comissao'] + $return['privados_chefe']['comissao'] + $return['garrafas']['comissao'] - $return['convites']['comissao'] - $return['atrasos']['comissao'] + $return['extras']['total'] + ($return['divida']);
+			$return['total'] = $return['sessoes']['comissao'] + $return['guest']['comissao'] + $return['guest']['comissao_bonus'] + $return['guest_team']['comissao'] + $return['guest_team']['comissao_bonus'] + $return['privados']['comissao'] + $return['privados_chefe']['comissao'] + $return['garrafas']['comissao'] - $return['convites']['comissao'] - $return['atrasos']['comissao'] + $return['extras']['total'] + ($return['divida']);
 
 			return $return;
         }
@@ -403,6 +426,35 @@ class pagamentos
         if ($resultado) {
             $return['comissao'] = ($resultado[0]['total'] / 1.23) * 0.02;
             $return['descricao'] = "<b>" . $data_evento . "</b>: " . intval($resultado[0]['quantidade']) . " privados equipa";
+
+            return $return;
+        }
+    }
+    function devolveComissaoSessoesChefe($id_rp, $data_evento)
+    {
+
+        $query = " SELECT COUNT(rps_equipa.id) as conta FROM rps INNER JOIN rps rps_equipa ON rps.id = rps_equipa.id_chefe_equipa INNER JOIN presencas ON rps_equipa.id = presencas.id_rp  WHERE rps.id = '" . $id_rp . "' AND presencas.data_evento = '" . $data_evento  . "' AND rps.id_cargo = 20 GROUP BY rps.id";
+        $resultado = $this->db->query($query);
+
+
+        if ($resultado[0]["conta"] > 0) {
+
+            $comissao = 0;
+
+            switch (true) {
+                case $resultado[0]["conta"] >= 20 && $resultado[0]["conta"] < 40:
+                    $comissao = 20;
+                    break;
+                case $resultado[0]["conta"] >= 40 && $resultado[0]["conta"] < 50:
+                    $comissao = 40;
+                    break;
+                case $resultado[0]["conta"] >= 50 :
+                    $comissao = 50;
+                    break;
+            }
+
+            $return['comissao'] =  $comissao;
+            $return['descricao'] = "<b>" . $data_evento . "</b>: Equipa (" . intval($resultado[0]["conta"]) . " elementos com sessão) ";
 
             return $return;
         }

@@ -165,6 +165,23 @@ if ($pagamento['atrasos']) {
     </div>
 <?php
 }
+if ($pagamento['sessoes']) {
+?>
+    <div class="linha credito">
+        <span class="topo">
+            <span class="nome">
+                Entradas de Equipa
+            </span>
+            <span class="valor">
+                <?php echo euro($pagamento['sessoes']['comissao']); ?>
+            </span>
+        </span>
+        <span class="descricao">
+            <?php echo ($pagamento['sessoes']['descricao']); ?>
+        </span>
+    </div>
+<?php
+}
 if ($pagamento['convites']) {
 ?>
 

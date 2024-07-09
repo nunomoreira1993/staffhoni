@@ -109,6 +109,14 @@ if (!empty($datas_pagamento) || $id_rp == 0) {
                 $id_conta_corrente_linha = $db->Insert('conta_corrente_linhas', $campo);
                 $paga = $db->Update('venda_garrafas_bar', array('paga' => 1), 'id_rp = ' . $id_rp);
             }
+            if ($pagamento['sessoes']) {
+                unset($campo);
+                $campo['id_conta_corrente'] = $id_conta_corrente;
+                $campo["valor"] = $pagamento["sessoes"]["comissao"];
+                $campo["descricao"] = $pagamento["sessoes"]["descricao"];
+                $campo["nome"] = "Entradas de Equipa";
+                $id_conta_corrente_linha = $db->Insert('conta_corrente_linhas', $campo);
+            }
             if ($pagamento['atrasos']) {
                 unset($campo);
                 $campo['id_conta_corrente'] = $id_conta_corrente;
