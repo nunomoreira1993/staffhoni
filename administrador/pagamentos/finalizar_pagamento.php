@@ -114,7 +114,7 @@ if (!empty($datas_pagamento) || $id_rp == 0) {
                 $campo['id_conta_corrente'] = $id_conta_corrente;
                 $campo["valor"] = $pagamento["sessoes"]["comissao"];
                 $campo["descricao"] = $pagamento["sessoes"]["descricao"];
-                $campo["nome"] = "Entradas de Equipa";
+                $campo["nome"] = "Sessão";
                 $id_conta_corrente_linha = $db->Insert('conta_corrente_linhas', $campo);
             }
             if ($pagamento['atrasos']) {

@@ -243,7 +243,7 @@ class pagamentos
                     $privados_chefe = $this->devolveComissaoPrivadosChefe($id_rp, $data_evento);
                     $atrasos = $this->devolveAtrasos($id_rp, $data_evento);
                     // $convites = $this->devolveValidaConvite($id_rp, $data_evento);
-                    $sessoes = $this->devolveComissaoSessoesChefe($id_rp, $data_evento);
+                    $sessoes = $this->devolveComissaoSessoesChefe($id_rp, $data_evento, $guest_team["entrou"]);
 
                     if ($guest['comissao'] > 0) {
                         $return['guest']['comissao'] += $guest["comissao"];
@@ -430,31 +430,30 @@ class pagamentos
             return $return;
         }
     }
-    function devolveComissaoSessoesChefe($id_rp, $data_evento)
+    function devolveComissaoSessoesChefe($id_rp, $data_evento, $entrou = 0)
     {
 
-        $query = " SELECT COUNT(rps_equipa.id) as conta FROM rps INNER JOIN rps rps_equipa ON rps.id = rps_equipa.id_chefe_equipa INNER JOIN presencas ON rps_equipa.id = presencas.id_rp  WHERE rps.id = '" . $id_rp . "' AND presencas.data_evento = '" . $data_evento  . "' AND rps.id_cargo = 20 GROUP BY rps.id";
+        $query = " SELECT COUNT(rps.id) as conta FROM rps INNER JOIN presencas ON rps.id = presencas.id_rp  WHERE rps.id = '" . $id_rp . "' AND presencas.data_evento = '" . $data_evento  . "' AND rps.id_cargo = 20 GROUP BY rps.id";
         $resultado = $this->db->query($query);
-
 
         if ($resultado[0]["conta"] > 0) {
 
             $comissao = 0;
 
             switch (true) {
-                case $resultado[0]["conta"] >= 20 && $resultado[0]["conta"] < 40:
+                case $entrou >= 20 && $entrou < 40:
                     $comissao = 20;
                     break;
-                case $resultado[0]["conta"] >= 40 && $resultado[0]["conta"] < 50:
+                case $entrou >= 40 && $entrou < 50:
                     $comissao = 40;
                     break;
-                case $resultado[0]["conta"] >= 50 :
+                case $entrou >= 50:
                     $comissao = 50;
                     break;
             }
 
             $return['comissao'] =  $comissao;
-            $return['descricao'] = "<b>" . $data_evento . "</b>: Equipa (" . intval($resultado[0]["conta"]) . " elementos com sessão) ";
+            $return['descricao'] = "<b>" . $data_evento . "</b>: Sessão (" . intval($entrou) . " entradas) ";
 
             return $return;
         }

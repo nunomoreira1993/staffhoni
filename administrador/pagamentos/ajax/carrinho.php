@@ -170,7 +170,7 @@ if ($pagamento['sessoes']) {
     <div class="linha credito">
         <span class="topo">
             <span class="nome">
-                Entradas de Equipa
+                Sessão
             </span>
             <span class="valor">
                 <?php echo euro($pagamento['sessoes']['comissao']); ?>
