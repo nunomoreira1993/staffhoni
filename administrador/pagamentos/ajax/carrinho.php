@@ -182,6 +182,57 @@ if ($pagamento['sessoes']) {
     </div>
 <?php
 }
+if ($pagamento['estatisticas_chefe']) {
+?>
+    <div class="linha credito">
+        <span class="topo">
+            <span class="nome">
+                Prémio Melhor Chefe de Equipa
+            </span>
+            <span class="valor">
+                <?php echo euro($pagamento['estatisticas_chefe']['comissao']); ?>
+            </span>
+        </span>
+        <span class="descricao">
+            <?php echo ($pagamento['estatisticas_chefe']['descricao']); ?>
+        </span>
+    </div>
+<?php
+}
+if ($pagamento['estatisticas_rp']) {
+?>
+    <div class="linha credito">
+        <span class="topo">
+            <span class="nome">
+                Prémio Melhor RP
+            </span>
+            <span class="valor">
+                <?php echo euro($pagamento['estatisticas_rp']['comissao']); ?>
+            </span>
+        </span>
+        <span class="descricao">
+            <?php echo ($pagamento['estatisticas_rp']['descricao']); ?>
+        </span>
+    </div>
+<?php
+}
+if ($pagamento['estatisticas_privados']) {
+?>
+    <div class="linha credito">
+        <span class="topo">
+            <span class="nome">
+                Prémio Mais Vendas Privados
+            </span>
+            <span class="valor">
+                <?php echo euro($pagamento['estatisticas_privados']['comissao']); ?>
+            </span>
+        </span>
+        <span class="descricao">
+            <?php echo ($pagamento['estatisticas_privados']['descricao']); ?>
+        </span>
+    </div>
+<?php
+}
 if ($pagamento['convites']) {
 ?>
 

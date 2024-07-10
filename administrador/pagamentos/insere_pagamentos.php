@@ -121,7 +121,7 @@ $tipo_extra  = $extras[0]['tipo'];
         <div class="extras">
             <div class="titulo"> Adicionar extras</div>
             <?php
-            if ($dbpagamentos->devolveSessaoRP($id_rp) > 0) {
+            if ((int) $dbpagamentos->devolveSessaoRP($id_rp) > 0) {
                 ?>
                 <div class="extra">
                     <div class="bloco">

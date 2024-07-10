@@ -247,6 +247,29 @@ $tipo = $adm['tipo'];
                     </li>
                 <?php
                 }
+                if ($tipo == 1 || $tipo == 5 || $tipo == 4 || $tipo == 6 || $tipo == 2) {
+                ?>
+                    <li <?php if ($_GET['pg'] == "estatisticas_privados" || $_GET['pg'] == "estatisticas_privados_detalhe" || $_GET['pg'] == "estatisticas_rp" || $_GET['pg'] == "estatisticas_chefe" || $_GET['pg'] == "estatisticas_rp_detalhe" || $_GET['pg'] == "estatisticas_chefe_detalhe") { ?> class="active" <?php } ?>>
+                        <a class="link" href="javascript:void(0)" aria-expanded="false">
+                            <i class="icone"></i>
+                            <span class="nome">Estatísticas</span>
+                        </a>
+                        <ul aria-expanded="false" class="collapse in">
+                            <li>
+                                <a href="?pg=estatisticas_privados" <?php if ($_GET['pg'] == "estatisticas_privados" || $_GET['pg'] == "estatisticas_privados_detalhe") { ?> class="active" <?php } ?>>
+                                    Estatísticas Venda de Privados
+                                </a>
+                                <a href="?pg=estatisticas_rp" <?php if ($_GET['pg'] == "estatisticas_rp" || $_GET['pg'] == "estatisticas_rp_detalhe") { ?> class="active" <?php } ?>>
+                                    Estatísticas de RP
+                                </a>
+                                <a href="?pg=estatisticas_chefe" <?php if ($_GET['pg'] == "estatisticas_chefe" || $_GET['pg'] == "estatisticas_chefe_detalhe") { ?> class="active" <?php } ?>>
+                                    Estatísticas de Entradas de Chefe de Equipa
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                <?php
+                }
                 ?>
 
             </ul>

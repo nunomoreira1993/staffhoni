@@ -117,6 +117,55 @@ if (!empty($datas_pagamento) || $id_rp == 0) {
                 $campo["nome"] = "Sessão";
                 $id_conta_corrente_linha = $db->Insert('conta_corrente_linhas', $campo);
             }
+            if ($pagamento['estatisticas_chefe']) {
+                unset($campo);
+                $campo['id_conta_corrente'] = $id_conta_corrente;
+                $campo["valor"] = $pagamento["estatisticas_chefe"]["comissao"];
+                $campo["descricao"] = $pagamento["estatisticas_chefe"]["descricao"];
+                $campo["nome"] = "Prémio Melhor Chefe de Equipa";
+                $campo["tabela"] = "estatisticas_entradas_chefe";
+                $campo["tabela_id"] = implode(",", $pagamento["estatisticas_chefe"]["id"]);
+                $tabela_array = explode(",", $campo["tabela_id"]);
+                if($tabela_array) {
+                    foreach( $tabela_array as $key => $value) {
+                        $db->update($campo["tabela"], array("pago" => 1), "id = " . $value);
+                    }
+                }
+                $id_conta_corrente_linha = $db->Insert('conta_corrente_linhas', $campo);
+            }
+            if ($pagamento['estatisticas_rp']) {
+                unset($campo);
+                $campo['id_conta_corrente'] = $id_conta_corrente;
+                $campo["valor"] = $pagamento["estatisticas_rp"]["comissao"];
+                $campo["descricao"] = $pagamento["estatisticas_rp"]["descricao"];
+                $campo["nome"] = "Prémio Melhor RP";
+                $campo["tabela"] = "estatisticas_entradas_rp";
+                $campo["tabela_id"] = implode(",", $pagamento["estatisticas_rp"]["id"]);
+                $tabela_array = explode(",", $campo["tabela_id"]);
+                if($tabela_array) {
+                    foreach( $tabela_array as $key => $value) {
+                        $db->update($campo["tabela"], array("pago" => 1), "id = " . $value);
+                    }
+                }
+                $id_conta_corrente_linha = $db->Insert('conta_corrente_linhas', $campo);
+            }
+            if ($pagamento['estatisticas_privados']) {
+                unset($campo);
+                $campo['id_conta_corrente'] = $id_conta_corrente;
+                $campo["valor"] = $pagamento["estatisticas_privados"]["comissao"];
+                $campo["descricao"] = $pagamento["estatisticas_privados"]["descricao"];
+                $campo["nome"] = "Prémio Mais Vendas Privados";
+                $campo["tabela"] = "estatisticas_privados_semana_rp";
+                $campo["tabela_id"] = implode(",", $pagamento["estatisticas_privados"]["id"]);
+                $tabela_array = explode(",", $campo["tabela_id"]);
+                if($tabela_array) {
+                    foreach( $tabela_array as $key => $value) {
+                        $db->update($campo["tabela"], array("pago" => 1), "id = " . $value);
+                    }
+                }
+
+                $id_conta_corrente_linha = $db->Insert('conta_corrente_linhas', $campo);
+            }
             if ($pagamento['atrasos']) {
                 unset($campo);
                 $campo['id_conta_corrente'] = $id_conta_corrente;

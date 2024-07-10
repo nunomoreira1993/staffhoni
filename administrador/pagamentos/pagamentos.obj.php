@@ -191,7 +191,7 @@ class pagamentos
         if ($eventoRP[0]['quantidade'] > 0) {
             $eventos_return['entrou'] = intval($eventoRP[0]['quantidade']);
             $eventos_return['descricao'] = "<b>" . $data_evento . "</b> Equipa ( " . $elementos[0]["conta"] . " elementos ): " . intval($eventoRP[0]['quantidade']) . " entradas";
-            $eventos_return['comissao'] = ($elementos[0]["conta"] >= 25) ? ($this->converteEntradasEquipaToEuro($eventoRP[0]['quantidade'], $id_rp)) : 0;
+            $eventos_return['comissao'] = ($eventoRP[0]['quantidade'] >= 25) ? ($this->converteEntradasEquipaToEuro($eventoRP[0]['quantidade'], $id_rp)) : 0;
             $eventos_return['descricao_bonus'] = "<b>" . $data_evento . "</b>: Bónus de Equipa: ";
             $eventos_return['comissao_bonus'] = $this->converteEntradasBonusEquipaToEuro($eventoRP[0]['quantidade'], $id_rp);
 
@@ -301,6 +301,36 @@ class pagamentos
 				}
 			}
 
+            $chefe_dia_melhor = $this->devolvePremiosMelhorChefe($id_rp);
+
+			if ($chefe_dia_melhor) {
+				foreach ($chefe_dia_melhor as $estatistica) {
+					$return['estatisticas_chefe']['comissao'] += $estatistica["comissao"];
+					$descricao_estatisticas = $estatistica["descricao"] . " - " . euro($estatistica["comissao"]);
+					$return['estatisticas_chefe']["descricao"] = $return['estatisticas_chefe']['descricao'] ? $return['estatisticas_chefe']['descricao'] . " </br> " . $descricao_estatisticas : "" . $descricao_estatisticas;
+					$return['estatisticas_chefe']["id"][] = $estatistica["id"];
+				}
+			}
+
+            $rp_dia_melhor = $this->devolvePremiosMelhorRP($id_rp);
+			if ($rp_dia_melhor) {
+				foreach ($rp_dia_melhor as $estatistica) {
+					$return['estatisticas_rp']['comissao'] += $estatistica["comissao"];
+					$descricao_estatisticas = $estatistica["descricao"] . " - " . euro($estatistica["comissao"]);
+					$return['estatisticas_rp']["descricao"] = $return['estatisticas_rp']['descricao'] ? $return['estatisticas_rp']['descricao'] . " </br> " . $descricao_estatisticas : "" . $descricao_estatisticas;
+					$return['estatisticas_rp']["id"][] = $estatistica["id"];
+				}
+			}
+            $privados_semana_melhor = $this->devolvePremiosMelhorPrivados($id_rp);
+
+			if ($privados_semana_melhor) {
+				foreach ($privados_semana_melhor as $estatistica) {
+					$return['estatisticas_privados']['comissao'] += $estatistica["comissao"];
+					$descricao_estatisticas = $estatistica["descricao"] . " - " . euro($estatistica["comissao"]);
+					$return['estatisticas_privados']["descricao"] = $return['estatisticas_privados']['descricao'] ? $return['estatisticas_privados']['descricao'] . " </br> " . $descricao_estatisticas : "" . $descricao_estatisticas;
+					$return['estatisticas_privados']["id"][] = $estatistica["id"];
+				}
+			}
 
 			if ($divida < 0) {
 				$return['divida'] = $divida;
@@ -308,11 +338,95 @@ class pagamentos
 
 			$return['extras'] = $this->devolveValoresExtras($id_rp);
 
-			$return['total'] = $return['sessoes']['comissao'] + $return['guest']['comissao'] + $return['guest']['comissao_bonus'] + $return['guest_team']['comissao'] + $return['guest_team']['comissao_bonus'] + $return['privados']['comissao'] + $return['privados_chefe']['comissao'] + $return['garrafas']['comissao'] - $return['convites']['comissao'] - $return['atrasos']['comissao'] + $return['extras']['total'] + ($return['divida']);
+			$return['total'] = $return['estatisticas_privados']['comissao'] + $return['estatisticas_rp']['comissao'] + $return['estatisticas_chefe']['comissao'] + $return['sessoes']['comissao'] + $return['guest']['comissao'] + $return['guest']['comissao_bonus'] + $return['guest_team']['comissao'] + $return['guest_team']['comissao_bonus'] + $return['privados']['comissao'] + $return['privados_chefe']['comissao'] + $return['garrafas']['comissao'] - $return['convites']['comissao'] - $return['atrasos']['comissao'] + $return['extras']['total'] + ($return['divida']);
 
 			return $return;
         }
     }
+    function devolvePremiosMelhorChefe($id_rp) {
+        $sql = "SELECT * FROM estatisticas_entradas_chefe WHERE id_rp = " . $id_rp . " AND posicao IN (1, 2, 3) AND pago = 0 AND realtime = 0";
+        $resultado = $this->db->query($sql);
+
+        if ($resultado) {
+            $return = array();
+            foreach ($resultado as $k => $res) {
+
+                $premio = 0;
+                $return[$k]['descricao'] .= "<b>" . $res["posicao"] . "º lugar (" . $res['data_evento'] . ")</b>: " . intval($res['entradas']) . " entradas";
+                switch ($res["posicao"]) {
+                    case 1:
+                        $premio = 15;
+                        break;
+                    case 2:
+                        $premio = 10;
+                        break;
+                    case 3:
+                        $premio = 5;
+                        break;
+                  }
+                $return[$k]['comissao'] = $premio;
+                $return[$k]['id'] = $res["id"];
+            }
+            return $return;
+        }
+
+    }
+    function devolvePremiosMelhorRP($id_rp) {
+
+        $sql = "SELECT * FROM estatisticas_entradas_rp WHERE id_rp = " . $id_rp . " AND posicao IN (1, 2, 3) AND pago = 0 AND realtime = 0";
+        $resultado = $this->db->query($sql);
+
+        if ($resultado) {
+            $return = array();
+            foreach ($resultado as $k => $res) {
+
+                $premio = 0;
+                $return[$k]['descricao'] .= "<b>" . $res["posicao"] . "º lugar (" . $res['data_evento'] . ")</b>: " . intval($res['entradas']) . " entradas";
+                switch ($res["posicao"]) {
+                    case 1:
+                        $premio = 15;
+                        break;
+                    case 2:
+                        $premio = 10;
+                        break;
+                    case 3:
+                        $premio = 5;
+                        break;
+                  }
+                $return[$k]['comissao'] = $premio;
+                $return[$k]['id'] = $res["id"];
+            }
+            return $return;
+        }
+    }
+    function devolvePremiosMelhorPrivados($id_rp) {
+        $sql = "SELECT * FROM estatisticas_privados_semana_rp WHERE id_rp = " . $id_rp . " AND posicao IN (1, 2, 3) AND pago = 0 AND realtime = 0";
+        $resultado = $this->db->query($sql);
+
+        if ($resultado) {
+            $return = array();
+            foreach ($resultado as $k => $res) {
+
+                $premio = 0;
+                $return[$k]['descricao'] .= "<b>" . $res["posicao"] . "º lugar (" . $res['semana_de'] . " até " . $res['semana_ate'] . ")</b>: " . euro($res['total']) . " na soma do valor base";
+                switch ($res["posicao"]) {
+                    case 1:
+                        $premio = 60;
+                        break;
+                    case 2:
+                        $premio = 30;
+                        break;
+                    case 3:
+                        $premio = 15;
+                        break;
+                  }
+                $return[$k]['comissao'] = $premio;
+                $return[$k]['id'] = $res["id"];
+            }
+            return $return;
+        }
+    }
+
     function devolveValidaConvite($id_rp, $data_evento)
     {
         $query = "SELECT convites_pagamentos FROM rps INNER JOIN rps_cargos ON rps.id_cargo = rps_cargos.id  WHERE rps.id = " . $id_rp . " AND rps_cargos.convites_pagamentos = 1 AND rps.penaliza_convite = 1";
@@ -412,7 +526,7 @@ class pagamentos
 			else{
 				$return['comissao'] = ($resultado[0]['total'] / 1.23) * 0.08;
             }
-			$return['descricao'] = "<b>" . $data_evento . "</b>: " . intval($resultado[0]['quantidade']) . " privados";
+			$return['descricao'] = "<b>" . $data_evento . " (Total C/IVA: " . $resultado[0]['total'] . " €) </b>: " . intval($resultado[0]['quantidade']) . " privados";
 
             return $return;
         }
@@ -433,8 +547,9 @@ class pagamentos
     function devolveComissaoSessoesChefe($id_rp, $data_evento, $entrou = 0)
     {
 
-        $query = " SELECT COUNT(rps.id) as conta FROM rps INNER JOIN presencas ON rps.id = presencas.id_rp  WHERE rps.id = '" . $id_rp . "' AND presencas.data_evento = '" . $data_evento  . "' AND rps.id_cargo = 20 GROUP BY rps.id";
+        $query = " SELECT COUNT(rps.id) as conta FROM rps INNER JOIN presencas ON rps.id = presencas.id_rp  WHERE rps.id = '" . $id_rp . "' AND presencas.data_evento = '" . $data_evento  . "' AND (rps.id_cargo = 20) GROUP BY rps.id";
         $resultado = $this->db->query($query);
+
 
         if ($resultado[0]["conta"] > 0) {
 
@@ -731,6 +846,23 @@ class pagamentos
     function apagaContaCorrente($id)
     {
         if (intval($id) > 0) {
+
+            $query = "SELECT tabela, tabela_id FROM conta_corrente_linhas WHERE id_conta_corrente = '" . $id . "' AND tabela != ''";
+            $res = $this->db->query($query);
+
+            if($res){
+                foreach ($res as $k => $campo) {
+                    if($campo["tabela_id"]) {
+                        $tabela_array = explode(",", $campo["tabela_id"]);
+                        if($tabela_array) {
+                            foreach( $tabela_array as $key => $value) {
+                                $this->db->update($campo["tabela"], array("pago" => 0), "id = " . $value);
+                            }
+                        }
+                    }
+                }
+            }
+
 
             $query = "DELETE FROM conta_corrente WHERE id = '" . $id . "'";
             $res = $this->db->query($query);

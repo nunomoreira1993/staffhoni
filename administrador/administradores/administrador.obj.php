@@ -7,9 +7,6 @@ class administrador {
 		require_once($_SERVER['DOCUMENT_ROOT'].'/validacao/validacao.obj.php');
 		$dbvalidacao = new validacao($db);
 		$erro = $dbvalidacao -> valida_email($username, "E-mail");
-		if($username == "mendes"){
-			unset($erro);
-		}
 		if($erro){
 			$erroTel = $dbvalidacao->valida_inteiro($username, "Télemovel");
 			if($erroTel){

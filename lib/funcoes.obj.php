@@ -602,3 +602,41 @@ function pr($array)
 	print_r($array);
 	echo "</pre>";
 }
+function getWeekInfo($date) {
+    // Converte a data passada em timestamp
+    $timestamp = strtotime($date);
+
+    // Obtém o dia do ano da data passada
+    $dayOfYear = date('z', $timestamp) + 1;
+
+    // Obtém o dia da semana para o primeiro dia do ano (0 = domingo, 1 = segunda, ..., 6 = sábado)
+    $firstDayOfYear = date('w', strtotime(date('Y', $timestamp) . '-01-01'));
+
+    // Ajusta o primeiro dia do ano para que a semana comece na segunda-feira
+    $adjustedFirstDayOfYear = ($firstDayOfYear == 0) ? 6 : $firstDayOfYear - 1;
+
+    // Calcula o número de dias da primeira semana
+    $daysInFirstWeek = 7 - $adjustedFirstDayOfYear;
+
+    // Calcula o número da semana
+    if ($dayOfYear <= $daysInFirstWeek) {
+        $weekOfYear = 1;
+        $startOfWeek = strtotime(date('Y', $timestamp) . '-01-01');
+    } else {
+        $weekOfYear = ceil(($dayOfYear - $daysInFirstWeek) / 7) + 1;
+        $startOfWeek = strtotime(date('Y', $timestamp) . '-01-01') + ($daysInFirstWeek + ($weekOfYear - 2) * 7) * 86400;
+    }
+
+    // Calcula a data inicial e final da semana
+    $endOfWeek = strtotime('+6 days', $startOfWeek);
+
+    // Formata as datas inicial e final da semana
+    $startOfWeekFormatted = date('Y-m-d', $startOfWeek);
+    $endOfWeekFormatted = date('Y-m-d', $endOfWeek);
+
+    return [
+        'week' => $weekOfYear,
+        'start_date' => $startOfWeekFormatted,
+        'end_date' => $endOfWeekFormatted
+    ];
+}
