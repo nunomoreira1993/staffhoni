@@ -289,7 +289,7 @@ class pagamentos
                     if ($sessoes['comissao'] > 0) {
                         $return['sessoes']['comissao'] += $sessoes["comissao"];
                         $descricao_sessoes = $sessoes["descricao"] . " - " . euro($sessoes["comissao"]);
-                        $return['sessoes']["descricao"] = $return['sessoes']['descricao'] ? $return['sessoes']['sessoes'] . " </br> " . $descricao_sessoes : "" . $descricao_sessoes;
+                        $return['sessoes']["descricao"] = $return['sessoes']['descricao'] ? $return['sessoes']['descricao'] . " </br> " . $descricao_sessoes : "" . $descricao_sessoes;
                     }
                 }
             }
