@@ -192,7 +192,7 @@ class rps {
 			$where_entradas = " data_evento = '" . $data . "'";
 		}
 
-		$query = "SELECT rps_entradas.*, rps.nome FROM rps_entradas LEFT JOIN rps ON rps_entradas.id_rp = rps.id WHERE  $where_entradas ORDER by rps_entradas.data DESC LIMIT 50";
+		$query = "SELECT rps_entradas.*, rps.nome FROM rps_entradas LEFT JOIN rps ON rps_entradas.id_rp = rps.id WHERE  $where_entradas ORDER by rps_entradas.data DESC";
 
 		$res_entradas = $this->db->query($query);
 		return $res_entradas;

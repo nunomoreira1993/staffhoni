@@ -180,4 +180,37 @@ class estatisticas {
         $res = $this->db->query($query);
         return $res;
     }
+
+    function getDaysStatisticByPrivadosRPWeekly($limit) {
+
+        $query = "SELECT count(*) as conta FROM (SELECT estatisticas_privados_semana_rp.semana FROM estatisticas_privados_semana_rp GROUP BY estatisticas_privados_semana_rp.semana ORDER BY estatisticas_privados_semana_rp.semana DESC) estatisticas_privados_semana_rp_replace ";
+        $res_conta = $this->db->query($query);
+
+        $query = "SELECT estatisticas_privados_semana_rp.semana, estatisticas_privados_semana_rp.semana_de, estatisticas_privados_semana_rp.semana_ate FROM estatisticas_privados_semana_rp GROUP BY estatisticas_privados_semana_rp.semana ORDER BY estatisticas_privados_semana_rp.semana DESC $limit";
+        $res = $this->db->query($query);
+
+
+
+        return array("count" => $res_conta[0]["conta"], "result" => $res);
+    }
+    function getDaysStatisticByEntranceRPDay($limit) {
+
+        $query = "SELECT count(*) as conta FROM (SELECT estatisticas_entradas_rp.data_evento FROM estatisticas_entradas_rp GROUP BY estatisticas_entradas_rp.data_evento ORDER BY estatisticas_entradas_rp.data_evento DESC) estatisticas_entradas_rp_replace ";
+        $res_conta = $this->db->query($query);
+
+        $query = "SELECT estatisticas_entradas_rp.data_evento FROM estatisticas_entradas_rp GROUP BY estatisticas_entradas_rp.data_evento ORDER BY estatisticas_entradas_rp.data_evento DESC $limit";
+        $res = $this->db->query($query);
+
+        return array("count" => $res_conta[0]["conta"], "result" => $res);
+    }
+    function getDaysStatisticByEntranceTeamDay($limit) {
+
+        $query = "SELECT count(*) as conta FROM (SELECT estatisticas_entradas_chefe.data_evento FROM estatisticas_entradas_chefe GROUP BY estatisticas_entradas_chefe.data_evento ORDER BY estatisticas_entradas_chefe.data_evento DESC) estatisticas_entradas_chefe_replace ";
+        $res_conta = $this->db->query($query);
+
+        $query = "SELECT estatisticas_entradas_chefe.data_evento FROM estatisticas_entradas_chefe GROUP BY estatisticas_entradas_chefe.data_evento ORDER BY estatisticas_entradas_chefe.data_evento DESC $limit";
+        $res = $this->db->query($query);
+
+        return array("count" => $res_conta[0]["conta"], "result" => $res);
+    }
 }
