@@ -49,7 +49,7 @@ $dates = $dbestatisticas->getDaysStatisticByEntranceTeamDay($limit);
 
                         <td class="text-nowrap">
                             <div class="opcoes">
-                                <a href="?pg=estatisticas_chefe_detalhe&id=<?php echo $rpp['id']; ?>" class="entradas"> Ver pontuação </a>
+                                <a href="?pg=estatisticas_chefe_detalhe&data_evento=<?php echo $result['data_evento']; ?>" class="entradas"> Ver pontuação </a>
                             </div>
                         </td>
                     </tr>

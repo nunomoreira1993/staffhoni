@@ -155,20 +155,30 @@ class estatisticas {
         $res = $this->db->query($query);
         return $res;
     }
-    function getStatisticByEntranceRPDay($data_evento) {
-        $query = "SELECT estatisticas_entradas_rp.posicao, estatisticas_entradas_rp.entradas, estatisticas_entradas_rp.id_rp, rps.nome, estatisticas_entradas_rp.data_evento FROM estatisticas_entradas_rp INNER JOIN rps ON rps.id = estatisticas_entradas_rp.id_rp WHERE estatisticas_entradas_rp.data_evento = '" . $data_evento . "' ORDER BY estatisticas_entradas_rp.entradas DESC";
+    function getStatisticByEntranceRPDay($data_evento, $limit = "") {
+
+        $query = "SELECT COUNT(*) as conta FROM estatisticas_entradas_rp INNER JOIN rps ON rps.id = estatisticas_entradas_rp.id_rp WHERE estatisticas_entradas_rp.data_evento = '" . $data_evento . "' ORDER BY estatisticas_entradas_rp.entradas DESC";
+        $res_conta = $this->db->query($query);
+
+        $query = "SELECT estatisticas_entradas_rp.posicao, estatisticas_entradas_rp.entradas, estatisticas_entradas_rp.id_rp, rps.nome, estatisticas_entradas_rp.data_evento FROM estatisticas_entradas_rp INNER JOIN rps ON rps.id = estatisticas_entradas_rp.id_rp WHERE estatisticas_entradas_rp.data_evento = '" . $data_evento . "' ORDER BY estatisticas_entradas_rp.entradas DESC $limit";
         $res = $this->db->query($query);
-        return $res;
+
+        return array("count" => $res_conta[0]["conta"], "result" => $res);
     }
     function simulateStatisticByEntranceTeamDay($data_evento) {
         $query = "SELECT SUM(rps_entradas.quantidade) as entradas, rps.id_chefe_equipa FROM rps_entradas INNER JOIN rps ON rps.id = rps_entradas.id_rp WHERE rps_entradas.data_evento = '" . $data_evento . "' AND rps.id_chefe_equipa > 0 GROUP BY rps.id_chefe_equipa ORDER BY entradas DESC";
         $res = $this->db->query($query);
         return $res;
     }
-    function getStatisticByEntranceTeamDay($data_evento) {
-        $query = "SELECT estatisticas_entradas_chefe.posicao, estatisticas_entradas_chefe.entradas, estatisticas_entradas_chefe.id_rp, rps.nome, estatisticas_entradas_chefe.data_evento FROM estatisticas_entradas_chefe INNER JOIN rps ON rps.id = estatisticas_entradas_chefe.id_rp WHERE estatisticas_entradas_chefe.data_evento = '" . $data_evento . "' ORDER BY estatisticas_entradas_chefe.entradas DESC";
+    function getStatisticByEntranceTeamDay($data_evento, $limit = "") {
+
+        $query = "SELECT COUNT(*) as conta FROM estatisticas_entradas_chefe INNER JOIN rps ON rps.id = estatisticas_entradas_chefe.id_rp WHERE estatisticas_entradas_chefe.data_evento = '" . $data_evento . "' ORDER BY estatisticas_entradas_chefe.entradas DESC";
+        $res_conta = $this->db->query($query);
+
+        $query = "SELECT estatisticas_entradas_chefe.posicao, estatisticas_entradas_chefe.entradas, estatisticas_entradas_chefe.id_rp, rps.nome, estatisticas_entradas_chefe.data_evento FROM estatisticas_entradas_chefe INNER JOIN rps ON rps.id = estatisticas_entradas_chefe.id_rp WHERE estatisticas_entradas_chefe.data_evento = '" . $data_evento . "' ORDER BY estatisticas_entradas_chefe.entradas DESC $limit";
         $res = $this->db->query($query);
-        return $res;
+
+        return array("count" => $res_conta[0]["conta"], "result" => $res);
     }
     function getStatisticByPrivadosRPDay($data_evento) {
         $query = "SELECT estatisticas_privados_dia_rp.posicao, estatisticas_privados_dia_rp.total, estatisticas_privados_dia_rp.id_rp, rps.nome, estatisticas_privados_dia_rp.data_evento FROM estatisticas_privados_dia_rp INNER JOIN rps ON rps.id = estatisticas_privados_dia_rp.id_rp WHERE estatisticas_privados_dia_rp.data_evento = '" . $data_evento . "' ORDER BY estatisticas_privados_dia_rp.entradas DESC";
@@ -186,10 +196,19 @@ class estatisticas {
         $query = "SELECT count(*) as conta FROM (SELECT estatisticas_privados_semana_rp.semana FROM estatisticas_privados_semana_rp GROUP BY estatisticas_privados_semana_rp.semana ORDER BY estatisticas_privados_semana_rp.semana DESC) estatisticas_privados_semana_rp_replace ";
         $res_conta = $this->db->query($query);
 
-        $query = "SELECT estatisticas_privados_semana_rp.semana, estatisticas_privados_semana_rp.semana_de, estatisticas_privados_semana_rp.semana_ate FROM estatisticas_privados_semana_rp GROUP BY estatisticas_privados_semana_rp.semana ORDER BY estatisticas_privados_semana_rp.semana DESC $limit";
+        $query = "SELECT estatisticas_privados_semana_rp.semana, estatisticas_privados_semana_rp.semana_de, estatisticas_privados_semana_rp.semana_ate FROM estatisticas_privados_semana_rp  GROUP BY estatisticas_privados_semana_rp.semana ORDER BY estatisticas_privados_semana_rp.semana DESC $limit";
         $res = $this->db->query($query);
 
+        return array("count" => $res_conta[0]["conta"], "result" => $res);
+    }
 
+    function getStatisticByPrivadosRPWeeklyByWeek($week, $limit) {
+
+        $query = "SELECT COUNT(*) as conta FROM estatisticas_privados_semana_rp INNER JOIN rps ON rps.id = estatisticas_privados_semana_rp.id_rp WHERE estatisticas_privados_semana_rp.semana = $week   ORDER BY estatisticas_privados_semana_rp.posicao ASC ";
+        $res_conta = $this->db->query($query);
+
+        $query = "SELECT estatisticas_privados_semana_rp.posicao, estatisticas_privados_semana_rp.total, rps.nome FROM estatisticas_privados_semana_rp INNER JOIN rps ON rps.id = estatisticas_privados_semana_rp.id_rp  WHERE estatisticas_privados_semana_rp.semana = $week  ORDER BY estatisticas_privados_semana_rp.posicao ASC $limit";
+        $res = $this->db->query($query);
 
         return array("count" => $res_conta[0]["conta"], "result" => $res);
     }
@@ -205,10 +224,10 @@ class estatisticas {
     }
     function getDaysStatisticByEntranceTeamDay($limit) {
 
-        $query = "SELECT count(*) as conta FROM (SELECT estatisticas_entradas_chefe.data_evento FROM estatisticas_entradas_chefe GROUP BY estatisticas_entradas_chefe.data_evento ORDER BY estatisticas_entradas_chefe.data_evento DESC) estatisticas_entradas_chefe_replace ";
+        $query = "SELECT count(*) as conta FROM (SELECT estatisticas_entradas_chefe.data_evento FROM estatisticas_entradas_chefe  GROUP BY estatisticas_entradas_chefe.data_evento ORDER BY estatisticas_entradas_chefe.data_evento DESC) estatisticas_entradas_chefe_replace ";
         $res_conta = $this->db->query($query);
 
-        $query = "SELECT estatisticas_entradas_chefe.data_evento FROM estatisticas_entradas_chefe GROUP BY estatisticas_entradas_chefe.data_evento ORDER BY estatisticas_entradas_chefe.data_evento DESC $limit";
+        $query = "SELECT estatisticas_entradas_chefe.data_evento FROM estatisticas_entradas_chefe  GROUP BY estatisticas_entradas_chefe.data_evento ORDER BY estatisticas_entradas_chefe.data_evento DESC $limit";
         $res = $this->db->query($query);
 
         return array("count" => $res_conta[0]["conta"], "result" => $res);

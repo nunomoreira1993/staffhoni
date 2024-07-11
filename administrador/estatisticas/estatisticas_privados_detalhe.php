@@ -4,7 +4,7 @@ if (empty($_SESSION['id_utilizador'])) {
     exit;
 }
 
-$pagina = intval($_GET['p']);
+$pagina = intval($_GET['p']) ?: 1;
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/administrador/estatisticas/estatisticas.obj.php');
 $dbestatisticas = new estatisticas($db);
@@ -12,9 +12,9 @@ $dbestatisticas = new estatisticas($db);
 $quantidade = 20;
 $limit = devolveLimit(array('pagina' => $pagina, 'numero' => $quantidade));
 
-$dates = $dbestatisticas->getDaysStatisticByEntranceRPDay($limit);
+$dates = $dbestatisticas->getStatisticByPrivadosRPWeeklyByWeek($_GET["semana"], $limit);
 ?>
-<h1 class="titulo"> Estatísticas RP (Entradas) </h1>
+<h1 class="titulo"> Estatísticas Venda de privados - Semana <?php echo $dates["result"][0]["semana"]; ?> </h1>
 <div class="content" <?php echo escreveErroSucesso(); ?>>
 
     <div style="margin-bottom:20px" class="filtros">
@@ -24,12 +24,14 @@ $dates = $dbestatisticas->getDaysStatisticByEntranceRPDay($limit);
     <?php
     echo devolvePaginacao($pagina, $dates["count"], $quantidade);
     ?>
-    <div class="table-responsive">
+
+<div class="table-responsive">
         <table cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
-                    <th>Data do Evento</th>
-                    <th class="text-nowrap"></th>
+                    <th>Posição</th>
+                    <th>Nome</th>
+                    <th>Total Vendas</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,13 +47,10 @@ $dates = $dbestatisticas->getDaysStatisticByEntranceRPDay($limit);
             foreach ($dates["result"] as $result) {
                 ?>
                     <tr>
-                        <td><?php echo $result['data_evento']; ?></td>
+                        <td><?php echo $result['posicao']; ?></td>
+                        <td><?php echo $result['nome']; ?></td>
+                        <td><?php echo $result['total']; ?></td>
 
-                        <td class="text-nowrap">
-                            <div class="opcoes">
-                                <a href="?pg=estatisticas_rp_detalhe&data_evento=<?php echo $result['data_evento']; ?>" class="entradas"> Ver pontuação </a>
-                            </div>
-                        </td>
                     </tr>
                 <?php
             }

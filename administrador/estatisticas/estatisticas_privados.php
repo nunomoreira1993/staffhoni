@@ -53,7 +53,7 @@ $dates = $dbestatisticas->getDaysStatisticByPrivadosRPWeekly($limit);
 
                         <td class="text-nowrap">
                             <div class="opcoes">
-                                <a href="?pg=estatisticas_privados_detalhe&id=<?php echo $rpp['id']; ?>" class="entradas"> Ver pontuação </a>
+                                <a href="?pg=estatisticas_privados_detalhe&semana=<?php echo $result['semana']; ?>" class="entradas"> Ver pontuação </a>
                             </div>
                         </td>
                     </tr>

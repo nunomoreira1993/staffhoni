@@ -238,17 +238,28 @@ switch ($pg) {
         include $_SERVER['DOCUMENT_ROOT'] . "/administrador/privados/entrada_privados.php";
         break;
 
-    case 'estatisticas_privados':
-        include $_SERVER['DOCUMENT_ROOT'] . "/administrador/estatisticas/estatisticas_privados.php";
-        break;
+        case 'estatisticas_privados':
+            include $_SERVER['DOCUMENT_ROOT'] . "/administrador/estatisticas/estatisticas_privados.php";
+            break;
 
-    case 'estatisticas_rp':
-        include $_SERVER['DOCUMENT_ROOT'] . "/administrador/estatisticas/estatisticas_rp.php";
-        break;
+        case 'estatisticas_rp':
+            include $_SERVER['DOCUMENT_ROOT'] . "/administrador/estatisticas/estatisticas_rp.php";
+            break;
 
-    case 'estatisticas_chefe':
-        include $_SERVER['DOCUMENT_ROOT'] . "/administrador/estatisticas/estatisticas_chefe.php";
-        break;
+        case 'estatisticas_chefe':
+            include $_SERVER['DOCUMENT_ROOT'] . "/administrador/estatisticas/estatisticas_chefe.php";
+            break;
+        case 'estatisticas_privados_detalhe':
+            include $_SERVER['DOCUMENT_ROOT'] . "/administrador/estatisticas/estatisticas_privados_detalhe.php";
+            break;
+
+        case 'estatisticas_rp_detalhe':
+            include $_SERVER['DOCUMENT_ROOT'] . "/administrador/estatisticas/estatisticas_rp_detalhe.php";
+            break;
+
+        case 'estatisticas_chefe_detalhe':
+            include $_SERVER['DOCUMENT_ROOT'] . "/administrador/estatisticas/estatisticas_chefe_detalhe.php";
+            break;
 
     default:
         include  $default;
