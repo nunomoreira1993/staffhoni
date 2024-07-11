@@ -39,9 +39,11 @@ if ($id_rp > 0 && $numero > 0 && $dbrps->verificaPresencaRP( $id_rp) == 0) {
         $camposExtra['sessao'] = 0;
         $camposExtra['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
         $camposExtra['ip'] = $_SERVER['REMOTE_ADDR'];
-        $db->Insert( 'pagamentos_extras', $camposExtra);
+        if($camposExtra['valor'] > 0) {
+            $db->Insert( 'pagamentos_extras', $camposExtra);
+        }
 
-        
+
         echo json_encode(array('sucesso' => 1,'erro' => 0));
     }
 }
