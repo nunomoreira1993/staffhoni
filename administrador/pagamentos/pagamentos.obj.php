@@ -185,7 +185,7 @@ class pagamentos
         $elementos = $this->db->query($query);
 
 
-        $query = "SELECT sum(rps_entradas.quantidade) as quantidade FROM rps_entradas INNER JOIN rps ON rps.id = rps_entradas.id_rp AND rps.comissao_guest = 1  WHERE ( rps.id_chefe_equipa = " . $id_rp . " OR  ( rps.id = " . $id_rp . " AND rps.id_cargo = 20 )  ) AND rps_entradas.data_evento = '" . $data_evento . "' GROUP BY rps_entradas.data_evento DESC";
+        $query = "SELECT sum(rps_entradas.quantidade) as quantidade FROM rps_entradas INNER JOIN rps ON rps.id = rps_entradas.id_rp AND rps.comissao_guest = 1  WHERE ( rps.id_chefe_equipa = " . $id_rp . " ) AND rps_entradas.data_evento = '" . $data_evento . "' GROUP BY rps_entradas.data_evento DESC";
         $eventoRP = $this->db->query($query);
 
         if ($eventoRP[0]['quantidade'] > 0) {
