@@ -336,12 +336,20 @@ class pagamentos
 				$return['divida'] = $divida;
 			}
 
-			$return['extras'] = $this->devolveValoresExtras($id_rp);
+            $extras = $this->devolveValoresExtras($id_rp);
+            if($extras){
+                $return['extras'] = $extras;
+            }
 
 			$return['total'] = $return['estatisticas_privados']['comissao'] + $return['estatisticas_rp']['comissao'] + $return['estatisticas_chefe']['comissao'] + $return['sessoes']['comissao'] + $return['guest']['comissao'] + $return['guest']['comissao_bonus'] + $return['guest_team']['comissao'] + $return['guest_team']['comissao_bonus'] + $return['privados']['comissao'] + $return['privados_chefe']['comissao'] + $return['garrafas']['comissao'] - $return['convites']['comissao'] - $return['atrasos']['comissao'] + $return['extras']['total'] + ($return['divida']);
 
 			return $return;
         }
+    }
+    function devolvePosicaoMelhorChefe($id_rp, $data_evento) {
+        $sql = "SELECT * FROM estatisticas_entradas_chefe WHERE id_rp = " . $id_rp . " AND data_evento = '" . $data_evento . "'";
+        $resultado = $this->db->query($sql);
+        return $resultado[0];
     }
     function devolvePremiosMelhorChefe($id_rp) {
         $sql = "SELECT * FROM estatisticas_entradas_chefe WHERE id_rp = " . $id_rp . " AND posicao IN (1, 2, 3) AND pago = 0 AND realtime = 0";
@@ -371,6 +379,11 @@ class pagamentos
         }
 
     }
+    function devolvePosicaoMelhorRP($id_rp, $data_evento) {
+        $sql = "SELECT * FROM estatisticas_entradas_rp WHERE id_rp = " . $id_rp . " AND data_evento = '" . $data_evento . "'";
+        $resultado = $this->db->query($sql);
+        return $resultado[0];
+    }
     function devolvePremiosMelhorRP($id_rp) {
 
         $sql = "SELECT * FROM estatisticas_entradas_rp WHERE id_rp = " . $id_rp . " AND posicao IN (1, 2, 3) AND pago = 0 AND realtime = 0";
@@ -398,6 +411,11 @@ class pagamentos
             }
             return $return;
         }
+    }
+    function devolvePosicaoMelhorPrivados($id_rp, $data_evento) {
+        $sql = "SELECT * FROM estatisticas_privados_semana_rp WHERE id_rp = " . $id_rp . " AND semana_de <= '" . $data_evento . "' AND semana_ate >= '" . $data_evento . "'";
+        $resultado = $this->db->query($sql);
+        return $resultado[0];
     }
     function devolvePremiosMelhorPrivados($id_rp) {
         $sql = "SELECT * FROM estatisticas_privados_semana_rp WHERE id_rp = " . $id_rp . " AND posicao IN (1, 2, 3) AND pago = 0 AND realtime = 0";
@@ -527,6 +545,9 @@ class pagamentos
 				$return['comissao'] = ($resultado[0]['total'] / 1.23) * 0.08;
             }
 			$return['descricao'] = "<b>" . $data_evento . " (Total C/IVA: " . $resultado[0]['total'] . " €) </b>: " . intval($resultado[0]['quantidade']) . " privados";
+            $return['total'] = $resultado[0]['total'];
+            $return['numero'] = intval($resultado[0]['quantidade']);
+
 
             return $return;
         }
@@ -540,6 +561,8 @@ class pagamentos
         if ($resultado) {
             $return['comissao'] = ($resultado[0]['total'] / 1.23) * 0.02;
             $return['descricao'] = "<b>" . $data_evento . "</b>: " . intval($resultado[0]['quantidade']) . " privados equipa";
+            $return['total'] = $resultado[0]['total'];
+            $return['numero'] = $resultado[0]['quantidade'];
 
             return $return;
         }

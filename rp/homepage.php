@@ -12,12 +12,17 @@ if(empty($rp["qrcode"])){
 }
 else {
 	$qrcode =  "/fotos/convites/" . "honi_qrcode_" . $rp["id"].".png";
+	if(!file_exists($_SERVER["DOCUMENT_ROOT"] . $qrcode)) {
+		include_once($_SERVER["DOCUMENT_ROOT"] . '/plugins/phpqrcode/lib/full/qrlib.php');
+		$qrcode =  "/fotos/convites/" . "honi_qrcode_" . $rp["id"].".png";
+		QRcode::png($rp["qrcode"], $_SERVER["DOCUMENT_ROOT"] . $qrcode, QR_ECLEVEL_L, 35, 2);
+	}
 }
 $eventos = $dbrp->listaEventosRP();
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/administrador/pagamentos/pagamentos.obj.php');
 $dbpagamentos = new pagamentos($db);
-$pagamento = $dbpagamentos->devolvePagamento($_SESSION['id_rp']);
+$pagamentos = $dbpagamentos->devolvePagamento($_SESSION['id_rp']);
 ?>
 <div class="perfil">
 	<a href="#" class="foto">
@@ -40,9 +45,9 @@ $pagamento = $dbpagamentos->devolvePagamento($_SESSION['id_rp']);
 			<span class="titulo">
 				Saldo
 			</span>
-			<span class="valor <?php if ($pagamento['total'] < 0) { ?> pago <?php } else if ($pagamento['total'] > 0) { ?> recebido <?php } ?>">
+			<span class="valor <?php if ($pagamentos['total'] < 0) { ?> pago <?php } else if ($pagamentos['total'] > 0) { ?> recebido <?php } ?>">
 				<?php
-				echo euro($pagamento['total']);
+				echo euro($pagamentos['total']);
 				?>
 			</span>
 		</div>
@@ -51,91 +56,111 @@ $pagamento = $dbpagamentos->devolvePagamento($_SESSION['id_rp']);
 </div>
 <div class="entradas">
 	<?php
-	if ($eventos) {
-		foreach ($eventos as $evento) {
+	unset($pagamentos["total"]);
+	if ($pagamentos) {
+		foreach ($pagamentos as $key_pagamento => $pagamento) {
+			if($key_pagamento == "total") {
+				continue;
+			}
+			if ($key_pagamento == "guest") {
+                $nome_pagamento = "Comissão Guest";
+
+                if($pagamento["comissao_bonus"] > 0){
+                    unset($campo);
+                    $nome_pagamento = "Comissão Guest";
+                }
+            }
+            if ($key_pagamento == "guest_team") {
+                $nome_pagamento = "Comissão Guest - Equipa";
+
+                if($pagamento["comissao_bonus"] > 0){
+                    $nome_pagamento = "Comissão Guest - Equipa";
+                }
+            }
+            if ($key_pagamento == "privados") {
+                $nome_pagamento = "Privados";
+            }
+            if ($key_pagamento == "privados_chefe") {
+                $nome_pagamento = "Privados Equipa";
+            }
+            if ($key_pagamento == "garrafas") {
+                $nome_pagamento = "Garrafas Bar";
+            }
+            if ($key_pagamento == "sessoes") {
+                $nome_pagamento = "Sessão";
+            }
+            if ($key_pagamento == "estatisticas_chefe") {
+                $nome_pagamento = "Prémio Melhor Chefe de Equipa";
+            }
+            if ($key_pagamento == "estatisticas_rp") {
+                $nome_pagamento = "Prémio Melhor RP";
+            }
+            if ($key_pagamento == "estatisticas_privados") {
+                $nome_pagamento = "Prémio Mais Vendas Privados";
+            }
+            if ($key_pagamento == "atrasos") {
+                $nome_pagamento = "Atraso";
+            }
+            if ($key_pagamento == "convites") {
+                $nome_pagamento = "Penalização convite";
+            }
+
+            if ($key_pagamento == "divida") {
+                $nome_pagamento = "Dívida";
+            }
+			if ($key_pagamento == 'extras') {
+				$nome_pagamento = "Extras";
+			}
 			?>
 			<div class="evento">
 				<div class="topo">
 					<span class="data">
-						<?php echo $evento['data_evento']; ?>
+						<?php echo $nome_pagamento; ?>
 					</span>
 					<span class="estado">
-						<?php echo $evento['estado']; ?>
 					</span>
 				</div>
 				<div class="rodape">
-					<span class="item">
-						<span class="titulo">
-							Entradas
+					<?php
+					if($pagamento["comissao"] > 0) {
+						?>
+						<span class="item">
+							<span class="titulo">
+								<?php echo $pagamento["descricao"]; ?>
+							</span>
+							<span class="valor">
+								<?php echo euro($pagamento["comissao"]); ?>
+							</span>
 						</span>
-						<span class="valor">
-							<?php echo $evento['quantidade']; ?>
+						<?php
+					}
+					if($pagamento["comissao_bonus"] > 0 ){
+						?>
+						<span class="item">
+							<span class="titulo">
+								<?php echo $pagamento["descricao_bonus"]; ?>
+							</span>
+							<span class="valor">
+								<?php echo euro($pagamento["comissao_bonus"]); ?>
+							</span>
 						</span>
-					</span>
-					<span class="item">
-						<span class="titulo">
-							Cartões sem consumo
-						</span>
-						<span class="valor">
-							<?php echo $evento['cartoes_sem_consumo']; ?>
-						</span>
-					</span>
-					<span class="item">
-						<span class="titulo">
-							Embaixadores
-						</span>
-						<span class="valor">
-							<?php echo $evento['cartoes_consumo_obrigatorio']; ?>
-						</span>
-					</span>
-					<span class="item">
-						<span class="titulo">
-							Comissão Entradas
-						</span>
-						<span class="valor">
-							<?php echo euro($evento['comissao_entradas']); ?>
-						</span>
-					</span>
-					<span class="item">
-						<span class="titulo">
-							Comissão Bónus Entradas
-						</span>
-						<span class="valor">
-							<?php echo euro($evento['comissao_bonus_entradas']); ?>
-						</span>
-					</span>
-					<span class="item">
-						<span class="titulo">
-							Comissão Entradas Equipa
-						</span>
-						<span class="valor">
-							<?php echo euro($evento['comissao_equipa_entradas']); ?>
-						</span>
-					</span>
-					<span class="item">
-						<span class="titulo">
-							Comissão Bónus Entradas Equipa
-						</span>
-						<span class="valor">
-							<?php echo euro($evento['comissao_equipa_bonus_entradas']); ?>
-						</span>
-					</span>
-					<span class="item">
-						<span class="titulo">
-							Comissão Privados
-						</span>
-						<span class="valor">
-							<?php echo euro($evento['comissao_privados']); ?>
-						</span>
-					</span>
-					<span class="item">
-						<span class="titulo">
-							Comissão Garrafas
-						</span>
-						<span class="valor">
-							<?php echo euro($evento['comissao_garrafas']); ?>
-						</span>
-					</span>
+						<?php
+					}
+					if($pagamento['items'])	{
+						foreach ($pagamento['items'] as $items) {
+							?>
+							<span class="item">
+								<span class="titulo">
+									<?php echo $items["descricao"]; ?>
+								</span>
+								<span class="valor">
+									<?php echo euro($items["valor"]); ?>
+								</span>
+							</span>
+							<?php
+						}
+					}
+					?>
 				</div>
 			</div>
 		<?php
@@ -143,7 +168,7 @@ $pagamento = $dbpagamentos->devolvePagamento($_SESSION['id_rp']);
 } else {
 	?>
 		<div class="sem_registos">
-			Sem eventos a decorrer.
+			Sem pagamentos a regularizar.
 		</div>
 	<?php
 }

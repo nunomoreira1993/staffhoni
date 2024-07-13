@@ -286,18 +286,47 @@ class rp {
 				$eventos_return[$k]['data_evento_sql'] = $evento['data_evento'];
 
 
-				$eventosRPEquipa = $dbpagamentos->listaEventosEquipaRP( $this->rp, $eventos_return[$k]['data_evento_sql']);
-				if ($eventosRPEquipa) {
-					$eventos_return[$k]['entradas'] = $eventosRPEquipa['entrou'];
-					$eventos_return[$k]['entradas_equipa_comissao'] = $eventosRPEquipa['comissao'];
-					$eventos_return[$k]['entradas_equipa_comissao_bonus'] = $eventosRPEquipa['comissao_bonus'];
+				$guest = $dbpagamentos->listaEventosRP($this->rp, $evento['data_evento']);
+
+
+				if($guest) {
+					$eventos_return[$k]['entradas'] = $guest['entrou'];
+					$eventos_return[$k]['entradas_comissao'] = $guest['comissao'];
+					$eventos_return[$k]['entradas_bonus'] = $guest['comissao_bonus'];
 				}
 
-				$eventos_return[$k]['numero_privados'] = $this->devolveNumeroPrivadosequipa($eventos_return[$k]['data_evento_sql'], array( $this->rp));
-				$eventos_return[$k]['total_vendas_privados'] = $this->devolveTotalVendasPrivadosEquipa($eventos_return[$k]['data_evento_sql'], array( $this->rp));
-				$eventos_return[$k]['comissao_privados'] = $eventos_return[$k]['total_vendas_privados'] * 0.05;
+
+				$guest_team = $dbpagamentos->listaEventosEquipaRP($this->rp, $evento['data_evento']);
+
+				if ($guest_team) {
+					$eventos_return[$k]['entradas_equipa'] = $guest_team['entrou'];
+					$eventos_return[$k]['entradas_equipa_comissao'] = $guest_team['comissao'];
+					$eventos_return[$k]['entradas_equipa_comissao_bonus'] = $guest_team['comissao_bonus'];
+				}
+
+				$privados = $dbpagamentos->devolveComissaoPrivados($this->rp, $evento['data_evento']);
+
+				$eventos_return[$k]['privados_numero'] =  $privados["numero"];
+				$eventos_return[$k]['privados_total'] = $privados["total"];
+				$eventos_return[$k]['privados_comissao'] = $privados["comissao"];
+
+				$privados_chefe = $dbpagamentos->devolveComissaoPrivadosChefe($this->rp, $evento['data_evento']);
+
+				$eventos_return[$k]['privados_equipa_numero'] =  $privados_chefe["numero"];
+				$eventos_return[$k]['privados_equipa_total'] = $privados_chefe["total"];
+				$eventos_return[$k]['privados_equipa_comissao'] = $privados_chefe["comissao"];
+
+				$estatistica_chefe = $dbpagamentos->devolvePosicaoMelhorChefe($this->rp, $evento['data_evento']);
+				$eventos_return[$k]['estatisticas_equipa'] = $estatistica_chefe['posicao'];
+
+				$estatistica_rp = $dbpagamentos->devolvePosicaoMelhorRP($this->rp, $evento['data_evento']);
+				$eventos_return[$k]['estatisticas_individual'] = $estatistica_rp['posicao'];
+
+				$estatistica_privados = $dbpagamentos->devolvePosicaoMelhorPrivados($this->rp, $evento['data_evento']);
+				$eventos_return[$k]['estatisticas_privados'] = $estatistica_privados['posicao'];
+
 				$eventos_return[$k]['melhor_equipa_rp_entradas'] = $this->devolveMelhorRPEquipasEntradas($eventos_return[$k]['data_evento_sql'], array( $this->rp));
-				if((int) $eventos_return[$k]['entradas'] == 0 && (int) $eventos_return[$k]['numero_privados'] == 0){
+				if((int) $eventos_return[$k]['entradas'] == 0 && (int) $eventos_return[$k]['privados_numero'] == 0){
 					unset($eventos_return[$k]);
 				}
 			}
@@ -342,36 +371,35 @@ class rp {
 
 
 		#saber stats equipa
-		$query = "SELECT id, nome, foto FROM rps WHERE (id_chefe_equipa = " . $equipa . " OR id = " . $equipa . " ) ORDER BY id_chefe_equipa ASC";
+		$query = "SELECT id, nome, foto FROM rps WHERE (id_chefe_equipa = " . $equipa . " ) ORDER BY nome ASC";
 		$res_equipa = $this->db->query($query);
 
+		$total_entradas = 0;
 		foreach ($res_equipa as $k => $res) {
 			$res_final[$k]['rp']['nome'] = $res['nome'];
 			$res_final[$k]['rp']['foto'] = $res['foto'];
 			$res_final[$k]['rp']['id'] = $res['id'];
 
-			#get rps e chefes de equipa
-			$query = "SELECT sum(rps_entradas.quantidade) as total FROM `rps_entradas` INNER JOIN rps ON rps.id = rps_entradas.id_rp WHERE rps.id  = '" . $res['id'] . "' AND rps_entradas.data_evento = '" . $data_evento . "'";
-			$res_entradas = $this->db->query($query);
-
-			$res_final[$k]['entradas'] = $res_entradas[0]['total'];
-
-			$eventosRP = $dbpagamentos->listaEventosRP($res['id'], $data_evento);
-			$res_final[$k]['entradas_comissao'] = $eventosRP['comissao'];
-			$res_final[$k]['entradas_comissao_bonus'] = $eventosRP['comissao_bonus'];
-
-
-			$eventosRPEquipa = $dbpagamentos->listaEventosEquipaRP($res['id'], $data_evento);
-			if ($eventosRPEquipa) {
-				$res_final[$k]['entradas_equipa'] = $eventosRPEquipa['entrou'];
-				$res_final[$k]['entradas_equipa_comissao'] = $eventosRPEquipa['comissao'];
-				$res_final[$k]['entradas_equipa_comissao_bonus'] = $eventosRPEquipa['comissao_bonus'];
+			$guest = $dbpagamentos->listaEventosRP($res['id'], $data_evento);
+			if($guest) {
+				$res_final[$k]['entradas'] = $guest['entrou'];
+				$res_final[$k]['entradas_comissao'] = $guest['comissao'];
+				$res_final[$k]['entradas_bonus'] = $guest['comissao_bonus'];
 			}
 
+			$privados = $dbpagamentos->devolveComissaoPrivados($res['id'], $data_evento);
+			$res_final[$k]['privados_numero'] =  $privados["numero"];
+			$res_final[$k]['privados_total'] = $privados["total"];
+			$res_final[$k]['privados_comissao'] = $privados["comissao"];
 
-			$privadosComissao = $dbpagamentos->devolveComissaoPrivados($res['id'], $data_evento);
-			$res_final[$k]['comissao_privados'] = $privadosComissao['comissao'];
+			$estatistica_rp = $dbpagamentos->devolvePosicaoMelhorRP($res['id'], $data_evento);
+			$res_final[$k]['estatisticas_individual'] = $estatistica_rp['posicao'];
+
+			$estatistica_privados = $dbpagamentos->devolvePosicaoMelhorPrivados($res['id'], $data_evento);
+			$res_final[$k]['estatisticas_privados'] = $estatistica_privados['posicao'];
+
 		}
+
 		return $res_final;
 	}
 	function devolveMelhorEquipaEntradas($data_evento, $ids = array()) {
@@ -386,7 +414,7 @@ class rp {
 	function devolveMelhorRPEquipasEntradas($data_evento, $ids = array()) {
 
 		#get rps e chefes de equipa
-		$query = "SELECT rps_entradas.quantidade, rps.nome, rps.id FROM `rps_entradas` INNER JOIN rps ON rps.id = rps_entradas.id_rp WHERE (rps.id IN ('" . implode("', '", $ids) . "') OR  rps.id_chefe_equipa IN ('" . implode("', '", $ids) . "')) AND rps_entradas.data_evento = '" . $data_evento . "'  ORDER BY quantidade DESC  ";
+		$query = "SELECT SUM(rps_entradas.quantidade) as quantidade, rps.nome, rps.id FROM `rps_entradas` INNER JOIN rps ON rps.id = rps_entradas.id_rp WHERE  rps.id_chefe_equipa IN ('" . implode("', '", $ids) . "') AND rps_entradas.data_evento = '" . $data_evento . "' GROUP BY rps.id  ORDER BY quantidade DESC   ";
 		$res_entradas = $this->db->query($query);
 
 		if ($res_entradas[0]) {

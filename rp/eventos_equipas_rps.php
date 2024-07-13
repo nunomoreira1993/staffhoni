@@ -33,68 +33,88 @@ $equipas = $dbrp->listaEstatisticasStaffEquipa($_GET['data_evento'], (int) $_GET
 					</span>
 				</div>
 				<div class="rodape">
+
 					<span class="item">
 						<span class="titulo">
-							Total - Entradas
+							Total de entradas (Individual)
 						</span>
 						<span class="valor">
 							<?php echo (int) $equipa['entradas']; ?>
 						</span>
 					</span>
-					<span class="item">
-						<span class="titulo">
-							Comissão - Entradas
-						</span>
-						<span class="valor">
-							<?php echo euro($equipa['entradas_comissao']); ?>
-						</span>
-					</span>
-					<span class="item">
-						<span class="titulo">
-							Bonus - Entradas
-						</span>
-						<span class="valor">
-							<?php echo euro($equipa['entradas_comissao_bonus']); ?>
-						</span>
-					</span>
 					<?php
-					if ($equipa['entradas_equipa']) {
-					?>
+					if($equipa['entradas'] > 0) {
+						?>
 						<span class="item">
 							<span class="titulo">
-								Total - Equipa - Entradas
+								Posição (Entradas) (Individual)
 							</span>
 							<span class="valor">
-								<?php echo ($equipa['entradas_equipa']); ?>
+								<?php echo $equipa['estatisticas_individual']; ?> º Lugar
 							</span>
 						</span>
+
 						<span class="item">
 							<span class="titulo">
-								Comissão - Equipa - Entradas
+								Comissão (Individual)
 							</span>
 							<span class="valor">
-								<?php echo euro($equipa['entradas_equipa_comissao']); ?>
+								<?php echo euro($equipa['entradas_comissao']); ?>
 							</span>
 						</span>
+
 						<span class="item">
 							<span class="titulo">
-								Bonus - Equipa - Entradas
+								Bónus (Individual)
 							</span>
 							<span class="valor">
-								<?php echo euro($equipa['entradas_equipa_comissao_bonus']); ?>
+								<?php echo euro($equipa['entradas_bonus']); ?>
 							</span>
 						</span>
-					<?php
+						<?php
 					}
 					?>
+
+
 					<span class="item">
 						<span class="titulo">
-							Comissão Privados
+							Numero de Privados (Individual)
 						</span>
 						<span class="valor">
-							<?php echo euro($equipa['comissao_privados']); ?>
+							<?php echo (int) $equipa['privados_numero']; ?>
 						</span>
 					</span>
+					<?php
+					if($equipa['privados_numero'] > 0) {
+						?>
+						<span class="item">
+							<span class="titulo">
+								Posição (Privados) (Individual)
+							</span>
+							<span class="valor">
+								<?php echo $equipa['estatisticas_privados']; ?> º Lugar
+							</span>
+						</span>
+						<span class="item">
+							<span class="titulo">
+								Total de Vendas Privados (Individual)
+							</span>
+							<span class="valor">
+								<?php echo euro($equipa['privados_total']); ?>
+							</span>
+						</span>
+						<span class="item">
+							<span class="titulo">
+								Comissão Privados (Individual)
+							</span>
+							<span class="valor">
+								<?php echo euro($equipa['privados_comissao']); ?>
+							</span>
+						</span>
+						<?php
+					}
+					?>
+
 				</div>
 			</div>
 		<?php

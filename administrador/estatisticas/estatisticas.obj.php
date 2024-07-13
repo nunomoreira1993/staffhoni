@@ -151,7 +151,7 @@ class estatisticas {
     }
 
     function simulateStatisticByEntranceRPDay($data_evento) {
-        $query = "SELECT SUM(quantidade) as entradas, id_rp FROM rps_entradas WHERE data_evento = '" . $data_evento . "' GROUP BY id_rp ORDER BY entradas DESC";
+        $query = "SELECT SUM(rps_entradas.quantidade) as entradas, rps_entradas.id_rp FROM rps_entradas INNER JOIN rps ON rps.id = rps_entradas.id_rp AND rps.comissao_guest = 1 WHERE rps_entradas.data_evento = '" . $data_evento . "' GROUP BY rps_entradas.id_rp ORDER BY entradas DESC";
         $res = $this->db->query($query);
         return $res;
     }
@@ -166,7 +166,7 @@ class estatisticas {
         return array("count" => $res_conta[0]["conta"], "result" => $res);
     }
     function simulateStatisticByEntranceTeamDay($data_evento) {
-        $query = "SELECT SUM(rps_entradas.quantidade) as entradas, rps.id_chefe_equipa FROM rps_entradas INNER JOIN rps ON rps.id = rps_entradas.id_rp WHERE rps_entradas.data_evento = '" . $data_evento . "' AND rps.id_chefe_equipa > 0 GROUP BY rps.id_chefe_equipa ORDER BY entradas DESC";
+        $query = "SELECT SUM(rps_entradas.quantidade) as entradas, rps.id_chefe_equipa FROM rps_entradas INNER JOIN rps ON rps.id = rps_entradas.id_rp AND rps.comissao_guest = 1 WHERE rps_entradas.data_evento = '" . $data_evento . "' AND rps.id_chefe_equipa > 0 GROUP BY rps.id_chefe_equipa ORDER BY entradas DESC";
         $res = $this->db->query($query);
         return $res;
     }

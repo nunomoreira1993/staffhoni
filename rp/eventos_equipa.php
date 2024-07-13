@@ -22,9 +22,18 @@ $eventos = $dbrp->listaEventosEquipa();
 					</span>
 				</div>
 				<div class="rodape">
+
 					<span class="item">
 						<span class="titulo">
-							Total de entradas
+							Posição (Entradas) (Individual)
+						</span>
+						<span class="valor">
+							<?php echo $evento['estatisticas_individual']; ?> º Lugar
+						</span>
+					</span>
+					<span class="item">
+						<span class="titulo">
+							Total de entradas (Individual)
 						</span>
 						<span class="valor">
 							<?php echo $evento['entradas']; ?>
@@ -33,7 +42,93 @@ $eventos = $dbrp->listaEventosEquipa();
 
 					<span class="item">
 						<span class="titulo">
-							Melhor Staff (Entradas)
+							Comissão (Individual)
+						</span>
+						<span class="valor">
+							<?php echo euro($evento['entradas_comissao']); ?>
+						</span>
+					</span>
+
+					<span class="item">
+						<span class="titulo">
+							Bónus (Individual)
+						</span>
+						<span class="valor">
+							<?php echo euro($evento['entradas_bonus']); ?>
+						</span>
+					</span>
+
+
+					<span class="item">
+						<span class="titulo">
+							Posição (Privados) (Individual)
+						</span>
+						<span class="valor">
+							<?php echo $evento['estatisticas_privados']; ?> º Lugar
+						</span>
+					</span>
+					<span class="item">
+						<span class="titulo">
+							Numero de Privados (Individual)
+						</span>
+						<span class="valor">
+							<?php echo (int) $evento['privados_numero']; ?>
+						</span>
+					</span>
+					<span class="item">
+						<span class="titulo">
+							Total de Vendas Privados (Individual)
+						</span>
+						<span class="valor">
+							<?php echo euro($evento['privados_total']); ?>
+						</span>
+					</span>
+					<span class="item">
+						<span class="titulo">
+							Comissão Privados (Individual)
+						</span>
+						<span class="valor">
+							<?php echo euro($evento['privados_comissao']); ?>
+						</span>
+					</span>
+
+					<span class="item">
+						<span class="titulo">
+							Posição (Entradas) (Equipa)
+						</span>
+						<span class="valor">
+							<?php echo $evento['estatisticas_equipa']; ?> º Lugar
+						</span>
+					</span>
+					<span class="item">
+						<span class="titulo">
+							Total de entradas (Equipa)
+						</span>
+						<span class="valor">
+							<?php echo $evento['entradas_equipa']; ?>
+						</span>
+					</span>
+
+					<span class="item">
+						<span class="titulo">
+							Comissão (Equipa)
+						</span>
+						<span class="valor">
+							<?php echo euro($evento['entradas_equipa_comissao']); ?>
+						</span>
+					</span>
+
+					<span class="item">
+						<span class="titulo">
+							Bónus (Equipa)
+						</span>
+						<span class="valor">
+							<?php echo euro($evento['entradas_equipa_comissao_bonus']); ?>
+						</span>
+					</span>
+					<span class="item">
+						<span class="titulo">
+							Melhor Staff (Entradas) (Equipa)
 						</span>
 						<span class="valor">
 							<?php echo $evento['melhor_equipa_rp_entradas']; ?>
@@ -42,28 +137,29 @@ $eventos = $dbrp->listaEventosEquipa();
 
 					<span class="item">
 						<span class="titulo">
-							Numero de Privados Vendidos
+							Numero de Privados (Equipa)
 						</span>
 						<span class="valor">
-							<?php echo (int) $evento['numero_privados']; ?>
+							<?php echo (int) $evento['privados_equipa_numero']; ?>
 						</span>
 					</span>
 					<span class="item">
 						<span class="titulo">
-							Total de Vendas Privados
+							Total de Vendas Privados (Equipa)
 						</span>
 						<span class="valor">
-							<?php echo euro($evento['total_vendas_privados']); ?>
+							<?php echo euro($evento['privados_equipa_total']); ?>
 						</span>
 					</span>
 					<span class="item">
 						<span class="titulo">
-							Comissão Privados
+							Comissão Privados (Equipa)
 						</span>
 						<span class="valor">
-							<?php echo euro($evento['comissao_privados']); ?>
+							<?php echo euro($evento['privados_equipa_comissao']); ?>
 						</span>
 					</span>
+
 				</div>
 				<div class="links">
 					<?php
