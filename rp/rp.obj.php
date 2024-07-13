@@ -326,7 +326,7 @@ class rp {
 				$eventos_return[$k]['estatisticas_privados'] = $estatistica_privados['posicao'];
 
 				$eventos_return[$k]['melhor_equipa_rp_entradas'] = $this->devolveMelhorRPEquipasEntradas($eventos_return[$k]['data_evento_sql'], array( $this->rp));
-				if((int) $eventos_return[$k]['entradas'] == 0 && (int) $eventos_return[$k]['privados_numero'] == 0){
+				if((int) $eventos_return[$k]['entradas'] == 0 && (int) $eventos_return[$k]['privados_numero'] == 0 && (int) $eventos_return[$k]['entradas_equipa'] == 0 && (int) $eventos_return[$k]['privados_equipa_numero'] == 0){
 					unset($eventos_return[$k]);
 				}
 			}
