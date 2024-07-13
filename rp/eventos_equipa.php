@@ -178,7 +178,7 @@ $eventos = $dbrp->listaEventosEquipa();
 				</div>
 				<div class="links">
 					<?php
-					if ($evento['entradas'] > 0) {
+					if ($evento['entradas_equipa'] > 0 || $evento['privados_equipa_numero'] > 0) {
 					?>
 						<a href="/rp/index.php?pg=eventos_equipas_rps&data_evento=<?php echo $evento['data_evento_sql']; ?>" class="ver_entradas"> Ver entradas por staff </a> <?php } ?>
 				</div>
