@@ -191,7 +191,7 @@ class pagamentos
         if ($eventoRP[0]['quantidade'] > 0) {
             $eventos_return['entrou'] = intval($eventoRP[0]['quantidade']);
             $eventos_return['descricao'] = "<b>" . $data_evento . "</b> Equipa ( " . $elementos[0]["conta"] . " elementos ): " . intval($eventoRP[0]['quantidade']) . " entradas";
-            $eventos_return['comissao'] = ($eventoRP[0]['quantidade'] >= 25) ? ($this->converteEntradasEquipaToEuro($eventoRP[0]['quantidade'], $id_rp)) : 0;
+            $eventos_return['comissao'] = ($eventoRP[0]['quantidade'] >= 0) ? ($this->converteEntradasEquipaToEuro($eventoRP[0]['quantidade'], $id_rp)) : 0;
             $eventos_return['descricao_bonus'] = "<b>" . $data_evento . "</b>: Bónus de Equipa: ";
             $eventos_return['comissao_bonus'] = $this->converteEntradasBonusEquipaToEuro($eventoRP[0]['quantidade'], $id_rp);
 
