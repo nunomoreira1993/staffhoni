@@ -243,7 +243,7 @@ class pagamentos
                     $privados_chefe = $this->devolveComissaoPrivadosChefe($id_rp, $data_evento);
                     $atrasos = $this->devolveAtrasos($id_rp, $data_evento);
                     // $convites = $this->devolveValidaConvite($id_rp, $data_evento);
-                    $sessoes = $this->devolveComissaoSessoesChefe($id_rp, $data_evento, $guest_team["entrou"]);
+                    $sessoes = $this->devolveComissaoSessoesChefe($id_rp, $data_evento, ($guest_team["entrou"] + $guest["entrou"]));
 
                     if ($guest['comissao'] > 0) {
                         $return['guest']['comissao'] += $guest["comissao"];
