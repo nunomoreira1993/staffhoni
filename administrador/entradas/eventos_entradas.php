@@ -41,7 +41,15 @@ $numerDiasRP = $dbrps->contaEntradasDiasTotal(false, $filtro);
             <thead>
                 <tr>
                     <th>Dia do evento</th>
-                    <th>Total de entradas</th>
+                    <th>Número Entradas</th>
+                    <th>Total Entradas - Comissão</th>
+                    <th>Total Entradas - Bónus</th>
+                    <th>Total Equipa - Comissão</th>
+                    <th>Total Equipa - Bónus</th>
+                    <th>Número de Privados</th>
+                    <th>Total Privados - Vendido</th>
+                    <th>Total Privados - Comissão</th>
+                    <th>Total Privados Equipa - Comissão</th>
                     <th>Total de Cartões Sem Consumo</th>
                     <th>Total de Embaixadores</th>
                     <th class="text-nowrap"></th>
@@ -61,19 +69,20 @@ $numerDiasRP = $dbrps->contaEntradasDiasTotal(false, $filtro);
                 ?>
                     <tr>
                         <td><?php echo $rpp['data_evento']; ?></td>
-                        <td><?php echo $rpp['total']; ?></td>
+                        <td><?php echo $rpp['totais']['entradas']; ?></td>
+                        <td><?php echo euro($rpp['totais']['entradas_comissao']); ?></td>
+                        <td><?php echo euro($rpp['totais']['entradas_bonus']); ?></td>
+                        <td><?php echo euro($rpp['totais']['entradas_equipa_comissao']); ?></td>
+                        <td><?php echo euro($rpp['totais']['entradas_equipa_comissao_bonus']); ?></td>
+                        <td><?php echo $rpp['totais']['privados_numero']; ?></td>
+                        <td><?php echo euro($rpp['totais']['privados_total']); ?></td>
+                        <td><?php echo euro($rpp['totais']['privados_comissao']); ?></td>
+                        <td><?php echo euro($rpp['totais']['privados_equipa_comissao']); ?></td>
                         <td><?php echo $rpp['total_sem_consumo']; ?></td>
                         <td><?php echo $rpp['total_cartoes_consumo_obrigatorio']; ?></td>
 
                         <td class="text-nowrap">
                             <div class="opcoes">
-                                <?php
-                                if ($rpp['fraude'] == 1) {
-                                    ?>
-                                    <span class="fraude"> Possível Fraude </span>
-                                <?php
-                            }
-                            ?>
                                 <a href="/administrador/exportar/exportar_evento.php?data=<?php echo $rpp['data_evento']; ?>" class="exportar-excell"> Exportar para Excell </a>
                                 <a href="?pg=entradas_evento_data&data=<?php echo $rpp['data_evento']; ?>" class="entradas"> Ver entradas ao minuto </a>
                                 <a href="?pg=entradas_evento_rps&data=<?php echo $rpp['data_evento']; ?>" class="entradas"> Ver entradas por RP </a>

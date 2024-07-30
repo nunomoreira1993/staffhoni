@@ -232,6 +232,14 @@ class rps {
 			$res_entradas[$k]['fraude'] = $this->verificaFraude($data_evento);
 			$res_entradas[$k]['total_sem_consumo'] = $this->contaCartoesSemConsumoData($data_evento);
 			$res_entradas[$k]['total_cartoes_consumo_obrigatorio'] = $this->contaCartoesConsumoObrigatorioData($data_evento);
+
+			$sql = "SELECT * FROM eventos_totais WHERE data_evento = '" . $data_evento . "'";
+			$res = $this->db->query($sql);
+			$res_entradas[$k]["totais"] = $res[0];
+
+
+
+
 		}
 		return $res_entradas;
 	}
