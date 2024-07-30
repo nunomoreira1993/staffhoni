@@ -262,7 +262,7 @@ class rp {
 
 		return $eventos_return;
 	}
-	function listaEventosEquipa() {
+	function listaEventosEquipa($data_evento = false) {
 
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/administrador/pagamentos/pagamentos.obj.php');
 		$dbpagamentos = new pagamentos($this->db);
@@ -272,7 +272,12 @@ class rp {
 		} else {
 			$data_actual = date('Y-m-d');
 		}
-		$query = "SELECT data_evento FROM rps_entradas  GROUP BY data_evento DESC";
+
+		$where = "";
+		if($data_evento) {
+			$where .= " WHERE data_evento = '" . $data_evento . "'";
+		}
+		$query = "SELECT data_evento FROM rps_entradas $where  GROUP BY data_evento DESC";
 		$eventos = $this->db->query($query);
 
 		if ($eventos) {
