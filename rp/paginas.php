@@ -90,6 +90,9 @@ switch ($pg) {
 		include "historico_pagamentos.php";
 		break;
 
+	case 'eventos_singular':
+		include "eventos_singular.php";
+		break;
 
 	default:
 		include  "homepage.php";

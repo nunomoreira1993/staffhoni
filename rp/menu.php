@@ -34,11 +34,19 @@ $cargo = $dbrp->cargo();
 			</a>
 		<?php
 		}
-		if ($cargo == $dbrp->getIDChefeEquipa()) {
+		else if ($cargo == $dbrp->getIDChefeEquipa()) {
 			?>
 		<a href="/rp/index.php?pg=eventos_equipa">
 			<span class="icon"><img src="/temas/rps/imagens/adicionar.svg" /></span>
 			<span class="nome">A minha equipa</span>
+		</a>
+		<?php
+		}
+		else {
+			?>
+		<a href="/rp/index.php?pg=eventos_singular">
+			<span class="icon"><img src="/temas/rps/imagens/adicionar.svg" /></span>
+			<span class="nome">Os meus eventos</span>
 		</a>
 		<?php
 		}
