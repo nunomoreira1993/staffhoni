@@ -249,7 +249,7 @@ $tipo = $adm['tipo'];
                 }
                 if ($tipo == 1 || $tipo == 5 || $tipo == 4 || $tipo == 6 || $tipo == 2) {
                 ?>
-                    <li <?php if ($_GET['pg'] == "estatisticas_privados" || $_GET['pg'] == "estatisticas_privados_detalhe" || $_GET['pg'] == "estatisticas_rp" || $_GET['pg'] == "estatisticas_chefe" || $_GET['pg'] == "estatisticas_rp_detalhe" || $_GET['pg'] == "estatisticas_chefe_detalhe") { ?> class="active" <?php } ?>>
+                    <li <?php if ($_GET['pg'] == "estatisticas_privados_anual" || $_GET['pg'] == "estatisticas_privados_anual_detalhe" || $_GET['pg'] == "estatisticas_privados" || $_GET['pg'] == "estatisticas_privados_detalhe" || $_GET['pg'] == "estatisticas_rp" || $_GET['pg'] == "estatisticas_chefe" || $_GET['pg'] == "estatisticas_rp_detalhe" || $_GET['pg'] == "estatisticas_chefe_detalhe") { ?> class="active" <?php } ?>>
                         <a class="link" href="javascript:void(0)" aria-expanded="false">
                             <i class="icone"></i>
                             <span class="nome">Estatísticas</span>
@@ -258,6 +258,9 @@ $tipo = $adm['tipo'];
                             <li>
                                 <a href="?pg=estatisticas_privados" <?php if ($_GET['pg'] == "estatisticas_privados" || $_GET['pg'] == "estatisticas_privados_detalhe") { ?> class="active" <?php } ?>>
                                     Estatísticas Venda de Privados
+                                </a>
+                                <a href="?pg=estatisticas_privados_anual" <?php if ($_GET['pg'] == "estatisticas_privados_anual" || $_GET['pg'] == "estatisticas_privados_anual_detalhe") { ?> class="active" <?php } ?>>
+                                    Estatísticas Venda de Privados Anual
                                 </a>
                                 <a href="?pg=estatisticas_rp" <?php if ($_GET['pg'] == "estatisticas_rp" || $_GET['pg'] == "estatisticas_rp_detalhe") { ?> class="active" <?php } ?>>
                                     Estatísticas de RP

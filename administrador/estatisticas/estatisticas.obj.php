@@ -201,6 +201,15 @@ class estatisticas {
 
         return array("count" => $res_conta[0]["conta"], "result" => $res);
     }
+    function getYearsStatisticByPrivadosRPWeekly($limit) {
+
+        $query = "SELECT count(*) as conta FROM (SELECT YEAR(estatisticas_privados_semana_rp.semana_ate) as ano FROM estatisticas_privados_semana_rp  GROUP BY YEAR(estatisticas_privados_semana_rp.semana_ate) ORDER BY YEAR(estatisticas_privados_semana_rp.semana_ate) DESC) estatisticas_privados_semana_rp_replace ";
+        $res_conta = $this->db->query($query);
+        $query = "SELECT YEAR(estatisticas_privados_semana_rp.semana_ate) as ano FROM estatisticas_privados_semana_rp  GROUP BY YEAR(estatisticas_privados_semana_rp.semana_ate) ORDER BY YEAR(estatisticas_privados_semana_rp.semana_ate) DESC $limit";
+        $res = $this->db->query($query);
+
+        return array("count" => $res_conta[0]["conta"], "result" => $res);
+    }
 
     function getStatisticByPrivadosRPWeeklyByWeek($week, $limit) {
 
@@ -208,6 +217,16 @@ class estatisticas {
         $res_conta = $this->db->query($query);
 
         $query = "SELECT estatisticas_privados_semana_rp.posicao, estatisticas_privados_semana_rp.total, rps.nome FROM estatisticas_privados_semana_rp INNER JOIN rps ON rps.id = estatisticas_privados_semana_rp.id_rp  WHERE estatisticas_privados_semana_rp.semana = $week  ORDER BY estatisticas_privados_semana_rp.posicao ASC $limit";
+        $res = $this->db->query($query);
+
+        return array("count" => $res_conta[0]["conta"], "result" => $res);
+    }
+    function getStatisticByPrivadosRPYearByYear($year, $limit) {
+
+        $query = "SELECT COUNT(*) as conta FROM (SELECT (ROW_NUMBER() OVER (ORDER BY SUM(estatisticas_privados_semana_rp.total) DESC)) as posicao, SUM(estatisticas_privados_semana_rp.total) as total, rps.nome FROM estatisticas_privados_semana_rp INNER JOIN rps ON rps.id = estatisticas_privados_semana_rp.id_rp  WHERE YEAR(estatisticas_privados_semana_rp.semana_ate) = $year GROUP BY rps.id ORDER BY total DESC) estatisticas_privados_semana_rp_replace ";
+        $res_conta = $this->db->query($query);
+
+        $query = "SELECT (ROW_NUMBER() OVER (ORDER BY SUM(estatisticas_privados_semana_rp.total) DESC)) as posicao, SUM(estatisticas_privados_semana_rp.total) as total, rps.nome FROM estatisticas_privados_semana_rp INNER JOIN rps ON rps.id = estatisticas_privados_semana_rp.id_rp  WHERE YEAR(estatisticas_privados_semana_rp.semana_ate) = $year GROUP BY rps.id ORDER BY total DESC $limit";
         $res = $this->db->query($query);
 
         return array("count" => $res_conta[0]["conta"], "result" => $res);
