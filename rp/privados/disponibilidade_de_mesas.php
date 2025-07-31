@@ -149,7 +149,7 @@ if ($_GET['cancelar']) {
                                         ?>
                                     </a>
                                     <?php
-                                    if (!$dbprivados->verificaMesaDisponivel($mesa['id'], $data_evento)) {
+                                    if (!in_array($id_cargo, array(20)) && !$dbprivados->verificaMesaDisponivel($mesa['id'], $data_evento)) {
                                         $reserva = $dbprivados->devolveReservaMesa($mesa['id'], $data_evento);
                                     ?>
                                         <div class="info_reserva">
